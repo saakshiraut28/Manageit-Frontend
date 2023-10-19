@@ -1,27 +1,38 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+# Include Files
+```javascript
+import { useRecoilState } from 'recoil';
+import { alertAtom , loadingAtom } from "../atom/global";
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# * To Show an alert
+
+1. Set
+
+```javascript
+const [alertState, setalertState] = useRecoilState(alertAtom) ;
+```
+
+2. Call
+
+Just call ```setShowAlert({open: true, text: "Your text", eventType: "success"})```
+
+* ```eventType``` Options: `success`, `error`, `info`, `warning`
+
+# * To Show loading screen
+1. Setup file
+
+```javascript
+const [loading, setloading] = useRecoilState(loadingAtom) ;
+```
+
+Without text
+
+```javascript
+setloading({open: true}) ;
+```
+
+With text 
+```javascript
+setloading({open: true, text: 'Dheriya rakhiye'}) ;
+```
+// dont forget to clean out text on loadout

@@ -14,7 +14,9 @@ const [alertState, setalertState] = useRecoilState(alertAtom) ;
 
 2. Call
 
-Just call ```setShowAlert({open: true, text: "Your text", eventType: "success"})```
+```javascript
+setShowAlert({open: true, text: "Your text", eventType: "success"})
+```
 
 * ```eventType``` Options: `success`, `error`, `info`, `warning`
 

@@ -49,8 +49,8 @@ const Demo = () => {
 
       <p className="my-2 text-green-700">* eventType Options: <b>success, error, info, warning</b></p>
       <p className="my-2">Try:</p>
-      <form onSubmit={handleAlert} className="flex flex-row">
-        <p>{`showAlert({ text: "`}</p>
+      <form onSubmit={handleAlert} className="flex flex-row flex-wrap">
+        <p>{`setalertState({ text: "`}</p>
         <input type="text" name="text" className="w-28" />
         <p>{`" , eventType: "`}</p>
         <input type="text" name="eventType" className="w-28" />

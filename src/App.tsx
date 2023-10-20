@@ -2,6 +2,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
+import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
 
 //      Components
 import Demo from "./components/Demo"
@@ -14,11 +16,15 @@ import Demo from "./components/Demo"
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Demo />,
+    element: <Dashboard />,
   },
   {
-    path: "/yo",
-    element: <div className="h-full w-full bg-blue-500">Hello world!</div>,
+    path: "/auth",
+    element: <Auth />,
+  },
+  {
+    path: "/demo",
+    element: <Demo />,
   },
 ]);
 

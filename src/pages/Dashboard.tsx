@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { getUserData } from "../services/user"
 
+import  taskCard  from "../components/TaskCard";
+
 const Dashboard = () => {
   let token = localStorage.getItem('token') ;
   const navigate = useNavigate() ;
@@ -18,7 +20,8 @@ const Dashboard = () => {
   }, [])
 
   return (
-    <div>Dashboard</div>
+    <div className=''>Dashboard
+    { taskCard() }</div>
   )
 }
 

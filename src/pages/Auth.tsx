@@ -1,60 +1,131 @@
 import { useState } from "react";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
-const inputClass = "border-2 p-2 w-full rounded-lg focus:outline-none"
+import { TextField, Button } from "@mui/material";
 
 const Auth = () => {
-  const [NewUser, setNewUser] = useState(true);
-  const [ShowPasswd, setShowPasswd] = useState(false);
+  const [newUser, setNewUser] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginAs, setLoginAs] = useState("");
 
-  const handleShowPasswd = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    setShowPasswd(!ShowPasswd);
+    if (newUser) {
+      handleSignup();
+    }
+    if (loginAs === "user") {
+      handleUserLogin();
+    }
+    if (loginAs === "org") {
+      handleOrgLogin();
+    }
+  }
+
+  const handleUserLogin = () => {
+    console.log("User Login!", email, password);
+  }
+
+  const handleOrgLogin = () => {
+    console.log("Org Login!", email, password);
+  }
+
+  const handleSignup = () => {
+    console.log("Org Signup!", name, email, password);
   }
 
   return (
     <div className="flex flex-row h-screen">
       {/* Left Image */}
-      <div className="h-full w-full">
-        <img src="https://duext.com/wp-content/uploads/2018/10/blog-3-option-1.jpg" alt="image" className="w-full h-full bg-cover bg-center" />
+      <div className="hidden md:flex justify-center items-center w-full p-5">
+        <img src="https://static.vecteezy.com/system/resources/previews/000/115/992/original/free-team-work-illustration-vectors.jpg" alt="image" className="lg:h-2/3 md:h-1/2 bg-cover bg-center" />
       </div>
 
       {/* Right Form */}
       <div className="h-full w-full flex flex-col items-center justify-center">
-        <h1 className="text-2xl my-2">Welcome to Manageit</h1>
+        <h1 className="text-2xl my-2">Welcome to PushNote</h1>
 
-        {NewUser ?
+        {/* In case user is new, signup will appear, otherwise login */}
+        {newUser ?
           <>
-            <h2>Signup as a manager</h2>
-            <form className="flex flex-col items-center gap-6 my-6 min-w-[300px]">
-              <input type="text" name="name" placeholder="Name" className={inputClass} />
-              <input type="text" name="email" placeholder="Email" className={inputClass} />
-              <div className="flex flex-row w-full border-2 rounded-lg">
-                <input type={ShowPasswd ? 'text' : 'password'} name="passwd" placeholder="Password" className="p-2 w-full rounded-lg focus:outline-none" />
-                <button onClick={handleShowPasswd} className="mr-1">{ShowPasswd ? <VisibilityOffIcon /> : <VisibilityIcon />}</button>
-              </div>
-              <button type="submit" className="px-2 py-1 bg-blue-400 text-white rounded-md">Sign up</button>
+            <h2>Signup as an Organisation</h2>
+            <form className="w-4/5 flex flex-col gap-5 my-8" onSubmit={onSubmit}>
+              <TextField
+                label="Name"
+                variant="outlined"
+                value={name}
+                required={true}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <TextField
+                label="Email"
+                type="email"
+                variant="outlined"
+                value={email}
+                required={true}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                label="Password"
+                type="password"
+                variant="outlined"
+                required={true}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Signup as Organisation
+              </Button>
             </form>
-            <p>Already have an account? <button onClick={() => setNewUser(false)} className="text-blue-500 underline">Log in</button></p>
+            <p>Already have an account? <button onClick={() => setNewUser(false)} className="text-blue-700">Log in</button></p>
+            <p className="p-2 mt-4 text-center"><span className="font-semibold">Note:</span> To signup as an user you will need to be invited by an organisation.</p>
           </>
           :
           <>
             <h2>Login to your account</h2>
-            <form className="flex flex-col items-center gap-6 my-6 min-w-[300px]">
-              {/* <input type="text" name="name" placeholder="Name" className={inputClass} /> */}
-              <input type="text" name="email" placeholder="Email" className={inputClass} />
-              <div className="flex flex-row w-full border-2 rounded-lg">
-                <input type={ShowPasswd ? 'text' : 'password'} name="passwd" placeholder="Password" className="p-2 w-full rounded-lg focus:outline-none" />
-                <button onClick={handleShowPasswd} className="mr-1">{ShowPasswd ? <VisibilityOffIcon /> : <VisibilityIcon />}</button>
+            <form className="w-4/5 flex flex-col gap-5 my-8" onSubmit={onSubmit}>
+              <TextField
+                label="Email"
+                variant="outlined"
+                value={email}
+                required={true}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                label="Password"
+                type="password"
+                variant="outlined"
+                required={true}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <div className="flex justify-center flex-wrap gap-4 mt-4">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setLoginAs("user")}
+                >
+                  Login as User
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setLoginAs("org")}
+                >
+                  Login as Organisation
+                </Button>
               </div>
-              <button type="submit" className="px-2 py-1 bg-blue-400 text-white rounded-md">Log in</button>
             </form>
-            <p>New to Manageit? <button onClick={() => setNewUser(true)} className="text-blue-500 underline">Sign up</button></p>
+            <p>New to PushNote? <button onClick={() => setNewUser(true)} className="text-blue-700">Sign up</button></p>
           </>}
       </div>
-    </div>
+    </div >
   )
 }
 
-export default Auth
+export default Auth;

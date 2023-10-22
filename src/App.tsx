@@ -2,7 +2,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
-import ProjectDesc from "./pages/ProjectDesc";
+import ProjectDash from "./pages/ProjectDash";
+import TaskPage from "./pages/TaskPage";
 
 //      Components
 import Demo from "./components/Demo"
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/project/:projectId",
-    element: <ProjectDesc />,
+    element: <ProjectDash />,
+  },
+  {
+    path: "/task/:taskId",
+    element: <TaskPage />,
   },
 ]);
 

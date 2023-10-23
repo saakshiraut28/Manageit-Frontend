@@ -7,3 +7,29 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Width and Height of scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    /* height: 8px; */
+}
+
+/* Track style */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+/* Handle style */
+::-webkit-scrollbar-thumb {
+    background: #bbb5b5; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #979595; 
+}
+
+/* Hide scrollbar buttons */
+::-webkit-scrollbar-button {
+    display: none;
+}

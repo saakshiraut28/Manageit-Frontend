@@ -3,9 +3,15 @@ import { Stack, Chip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ITask } from "../types/types"
 import axios from "axios";
+import { Types } from "mongoose";
 
-const Task = ({ taskId, projectId }) => {
-    const [task, setTask] = useState<ITask>(null);
+interface TaskProps {
+    taskId: Types.ObjectId;
+    projectId: Types.ObjectId;
+}
+
+const Task: React.FC<TaskProps> = ({ taskId, projectId }) => {
+    const [task, setTask] = useState<ITask>();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,7 +28,7 @@ const Task = ({ taskId, projectId }) => {
     return (
         <Link
             to="/:taskId"
-            className={`border-2 rounded-lg flex flex-col items-start gap-2 px-4 py-6 md:flex-row md:justify-between md:items-center ${taskId?.status === "completed" ? "bg-gray-200" : "bg-white"}`}
+            className={`border-2 rounded-lg flex flex-col items-start gap-2 px-4 py-6 md:flex-row md:justify-between md:items-center ${task?.status === "completed" ? "bg-gray-200" : "bg-white"}`}
         >
             <h1>Bug: Revoke the unwanted text in the header</h1>
             <Stack direction="row" spacing={1} className="flex flex-wrap gap-2">

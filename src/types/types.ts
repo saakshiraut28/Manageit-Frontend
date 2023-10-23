@@ -16,28 +16,20 @@ export interface AlertTextdef {
 }
 
 // ----------- Db models -------------------
-type Role = "admin" | "user";
 
-// Storing id for projects
-export interface projectType {
-    projectId: Types.ObjectId
-}
-
-// Storing id for users
+// Storing id and name for users
 export interface userType {
     userId: Types.ObjectId,
-    role: Role
+    name: string
 }
 
-export interface chatToType {
-    chatId: string,
-    chatName: string
+// Storing id and name for projects
+export interface projectType extends Document {
+    projectId: Types.ObjectId,
+    name: string
 }
 
-export interface taskType {
-    taskId: Types.ObjectId
-}
-
+// Comments interface for Tasks
 export interface commentType extends Document {
     userId: Types.ObjectId,
     userName: string,
@@ -45,12 +37,16 @@ export interface commentType extends Document {
     timestamp: Date,
 }
 
-// ------ User Types -----------
+export interface chatToType {
+    chatId: string,
+    chatName: string
+}
 
-export interface UserData {
-    exist?: boolean,
+
+// ----------- User Interface -------------
+export interface IUser extends Document {
     name: string,
-    role: Role,
+    role: string,
     email: string,
     passwd: string,
     projects?: projectType[],
@@ -58,26 +54,37 @@ export interface UserData {
     chatTo?: chatToType[],
 }
 
-// ---------- Project Type -------------------
+// ----------- Task Interface -------------
+export interface ITask extends Document {
+    name: string,
+    desc: string,
+    projectId: Types.ObjectId,
+    status?: string;
+    assignedBy?: userType;
+    assignedTo?: userType[],
+    createdBy: userType,
+    date: Date,
+    deadline?: Date,
+    comments?: commentType[]
+}
+
+// ----------- Project Interface -------------
 export interface IProject extends Document {
     name: string,
     desc: string,
     createdBy: userType,
     date: Date,
     orgId: Types.ObjectId,
-    tasks?: taskType[],
+    tasks?: Types.ObjectId[],
     users?: userType[]
 }
 
-export interface ITask extends Document {
+// ----------- Organisation Interface -------------
+export interface IOrganisation extends Document {
     name: string,
-    desc: string,
-    projectId: projectType,
-    status?: string;
-    assignedBy?: userType;
-    assignedTo?: userType[],    /* Task can be assigned to more than one user*/
-    createdBy: userType,
-    date: Date,
-    deadline?: Date,
-    comments?: commentType[]
+    email: string,
+    passwd: string,
+    role: string,
+    projects?: projectType[],
+    users?: userType[]
 }

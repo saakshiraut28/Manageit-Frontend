@@ -10,11 +10,7 @@ import Demo from "./components/Demo"
 import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
 
-// -----------------
 
-// Types & interfaces
-
-// ------------------
 
 const router = createBrowserRouter([
   {
@@ -49,4 +45,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;

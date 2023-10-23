@@ -11,6 +11,7 @@ const TaskPage = () => {
 
     const sendComment = () => {
         console.log(comment);
+        setComment("");
     }
 
     return (
@@ -42,24 +43,21 @@ const TaskPage = () => {
                     </div>
                     {/* Comments History */}
                     <div className="border-2 min-h-fit my-4 py-4 p-2 md:p-4 rounded-lg flex flex-col gap-4">
-                        <Chip icon={<CommentIcon />} label="Comments" className="w-40 mb-4" />
-                        <div className="flex gap-4 flex-col">
+                        <Chip icon={<CommentIcon />} label="Comments" className="w-40" />
+                        <div className="flex gap-4 flex-col h-96 md:h-72 overflow-y-scroll">
                             {comments ?
                                 <>
-                                    <Comment comment="" />
-                                    <Comment comment="" />
-                                    <Comment comment="" />
-                                    <Comment comment="" />
+                                    {/* <Comment comment="" /> */}
                                 </>
                                 :
-                                <div className="flex items-center justify-center h-32 text-center text-gray-700">
+                                <div className="flex items-center justify-center h-full text-center text-gray-700">
                                     No comments on this task. Be the first one to comment!
                                 </div>
                             }
-                            <div className="mt-4">
-                                <Input placeholder="Type your message...." required={true} onChange={(e) => setComment(e.target.value)} className="w-full px-2 pr-12 -mr-16" />
-                                <Button endIcon={<SendIcon />} type="button" disabled={!comment} onClick={sendComment} />
-                            </div>
+                        </div>
+                        <div className="">
+                            <Input placeholder="Type your message...." required={true} value={comment} onChange={(e) => setComment(e.target.value)} className="w-full px-2 pr-12 -mr-16" />
+                            <Button endIcon={<SendIcon />} type="button" disabled={!comment} onClick={sendComment} />
                         </div>
                     </div>
                 </div>

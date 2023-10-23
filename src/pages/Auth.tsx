@@ -8,7 +8,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [loginAs, setLoginAs] = useState("");
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newUser) {
       handleSignup();

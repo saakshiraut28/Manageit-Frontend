@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { commentType } from "../types/types";
 
-const Comment = ({ comment }) => {
+interface commentProps {
+    comment: commentType
+}
+
+const Comment: React.FC<commentProps> = ({ comment }) => {
     const [timeAgo, setTimeAgo] = useState("");
 
     // Calculate time to show with each comment

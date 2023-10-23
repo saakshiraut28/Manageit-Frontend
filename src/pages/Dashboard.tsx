@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { getUserData } from "../services/user"
 
+import  Sidenav  from "../components/Sidenav";
+import  taskCard  from "../components/TaskCard";
+import TaskModal from "../components/TaskModal";
+import ProjectModal from "../components/ProjectModal";
+
 const Dashboard = () => {
   let token = localStorage.getItem('token') ;
   const navigate = useNavigate() ;
@@ -18,7 +23,9 @@ const Dashboard = () => {
   }, [])
 
   return (
-    <div>Dashboard</div>
+    <div className=''>
+      <Sidenav />
+    </div>
   )
 }
 

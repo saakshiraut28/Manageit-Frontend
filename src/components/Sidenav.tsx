@@ -1,28 +1,25 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import FolderCopyIcon from '@mui/icons-material/FolderCopy';
-import CommentIcon from '@mui/icons-material/Comment';
+/** @format */
+
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import ProjectIcon from "../assets/icons/ProjectIcon.png";
+import ChatIcon from "../assets/icons/ChatIcon.png";
+import { useEffect, useState } from "react";
 
 const drawerWidth = 240;
-const current = new Date();
-const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
@@ -32,6 +29,7 @@ interface Props {
 }
 
 export default function ResponsiveDrawer(props: Props) {
+  
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -39,68 +37,96 @@ export default function ResponsiveDrawer(props: Props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const style = {
+    border: "none",
+    boxShadow: 'none',
+    innerHeight: '20px',
+  };
+
+    const [currentDate, setCurrentDate] = useState(new Date());
+  const [day, setDay] = useState('');
+  const [month, setMonth] = useState('');
+    const [dayOfWeek, setDayOfWeek] = useState('');
+
+  useEffect(() => {
+    // Update the current date every second
+    const interval = setInterval(() => {
+      const date = new Date();
+      setCurrentDate(date);
+      setDay(date.getDate());
+      setMonth(date.toLocaleString('default', { month: 'long' }));
+      setDayOfWeek(date.toLocaleString('default', { weekday: 'long' }));
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   const drawer = (
     <div>
       <Toolbar />
-      <Divider />
-      <List>
-        <p className='px-3 text-2xl font-bold'>
-          Organize.
-        </p>
-        <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
+      <List >
+        <ListItem>
+          {/* Organization Name */}
           <Typography>
-            <FolderCopyIcon /> Projects</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <List>
-            Project 1
-          </List>
-          <List>
-            Project 2
-          </List>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Calendar</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <List>
-            {date}
-          </List>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography><CommentIcon/> Messages</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <List>
-            Saakshi Raut
-          </List>
-        </AccordionDetails>
-      </Accordion>
+            <div className="text-2xl font-bold -mt-12">Organize.</div>
+          </Typography>
+        </ListItem>
+        <Divider />
+        {/* Project Accordion */}
+        <Accordion sx={style}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon sx={{ color: "black", alignItems:"end" }} />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <div className="flex"><span><img src={ProjectIcon} width={25} height={25}/></span><span className="pl-3 font-bold"> Projects</span></div>
+          </AccordionSummary>
+          <AccordionDetails><div className="hover:border-l-4 h-full hover:border-[#FF0000] pl-7 hover:bg-[#E8E8E8] p-1">Project1</div></AccordionDetails>
+          <AccordionDetails><div className="hover:border-l-4 h-full hover:border-[#FF0000] pl-7 hover:bg-[#E8E8E8] p-1">Project2</div></AccordionDetails>
+        </Accordion>
+        <Divider />
+        {/* Calendar */}
+        <ListItem>
+        <div className="py-4">
+          <span className="font-bold text-2xl ">
+            {month}
+          </span>
+          <br />
+          <span >
+            <span className="font-bold text-8xl ">
+              {day}
+            </span>
+            <span className="font-bold text-xl">
+              {dayOfWeek}
+            </span>
+          </span>
+        </div>
+        </ListItem>
+        <Divider />
+        {/* Chat  */}
+
+         <Accordion sx={style}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon sx={{ color: "black" }} />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <div className="flex "><span><img src={ChatIcon} width={25} height={25}/></span><span className="pl-4 font-bold"> Chats</span></div>
+          </AccordionSummary>
+          <AccordionDetails><div className="border-l-4 h-full border-[#2457C5] px-3 hover:bg-[#E8E8E8] p-2">Saakshi Raut</div></AccordionDetails>
+        </Accordion>
       </List>
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
+ 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -111,11 +137,11 @@ export default function ResponsiveDrawer(props: Props) {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
+            color="dark"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -136,8 +162,11 @@ export default function ResponsiveDrawer(props: Props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}
@@ -145,8 +174,11 @@ export default function ResponsiveDrawer(props: Props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
           open
         >
@@ -155,10 +187,14 @@ export default function ResponsiveDrawer(props: Props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+        }}
       >
         <Toolbar />
-        
       </Box>
     </Box>
-  );}
+  );
+}

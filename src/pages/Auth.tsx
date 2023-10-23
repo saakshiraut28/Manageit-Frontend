@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { TextField, Button } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from 'recoil';
+import { alertAtom, loadingAtom } from "../atom/global";
+import { loginParams, signupParams } from "../types/types";
 
 const Auth = () => {
   const [newUser, setNewUser] = useState(true);
@@ -7,30 +12,66 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginAs, setLoginAs] = useState("");
+  const [alertState, setalertState] = useRecoilState(alertAtom);
+  const navigate = useNavigate();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // If new user, it must be org signup
     if (newUser) {
-      handleSignup();
+      console.log("check new user");
+      handleAuth("orgSignup", "/org/signup");
     }
+    // If login as is user
     if (loginAs === "user") {
-      handleUserLogin();
+      console.log("check user login");
+      handleAuth("user", "/auth/login");
     }
-    if (loginAs === "org") {
-      handleOrgLogin();
+    // In case login as is org
+    else if (loginAs === "org") {
+      console.log("check org login");
+      handleAuth("orgLogin", "/org/login");
     }
   }
 
-  const handleUserLogin = () => {
-    console.log("User Login!", email, password);
-  }
+  // Function to handle signup, login for both org and user
+  const handleAuth = async (type: string, endpoint: string) => {
+    let input: signupParams | loginParams;
 
-  const handleOrgLogin = () => {
-    console.log("Org Login!", email, password);
-  }
+    // If type is signup then input will be diff
+    if (type === "orgSignup") {
+      input = {
+        email: email,
+        passwd: password,
+        name: name
+      }
+    } else {
+      input = {
+        email: email,
+        passwd: password
+      }
+    }
+    try {
+      const response = await axios.post("http://localhost:8000" + endpoint, input)
+      const data = response.data;
+      const token = data.token;
 
-  const handleSignup = () => {
-    console.log("Org Signup!", name, email, password);
+      if (token) {
+        localStorage.setItem("token", token);
+        // If user, navigate to user dashboard
+        if (loginAs === "user") {
+          navigate("/");
+        } else if (loginAs === "org") {
+          // If org, navigate to user dashboard
+          navigate("/org");
+        }
+        setalertState({ open: true, text: data.msg, eventType: "success" })
+      } else {
+        setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
+      }
+    } catch (error) {
+      setalertState({ open: true, text: error.response.data.msg, eventType: "error" });
+    }
   }
 
   return (

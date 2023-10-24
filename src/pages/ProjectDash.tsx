@@ -10,6 +10,7 @@ import { Skeleton, Popover, Button } from "@mui/material";
 import List from "../components/Lists";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
+import SideBar from "../components/SideBar";
 
 const ProjectDash = () => {
     const [project, setProject] = useState<IProject>();
@@ -42,8 +43,8 @@ const ProjectDash = () => {
 
     return (
         <div className="flex flex-row">
-            <div className="sidebar md:w-1/4"></div>
-            <div className="w-full px-4 sm:px-6 md:w-3/4">
+            <SideBar />
+            <div className="w-full px-4 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 items-center justify-between">
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>

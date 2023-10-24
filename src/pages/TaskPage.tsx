@@ -10,6 +10,7 @@ import { formatDate } from "../utils/formatDate";
 import { Types } from "mongoose";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
+import SideBar from "../components/SideBar";
 
 const TaskPage = () => {
     const [comment, setComment] = useState("");
@@ -53,9 +54,9 @@ const TaskPage = () => {
 
     return (
         <div className="flex flex-row">
-            <div className="sidebar md:w-1/4"></div>
+            <SideBar />
             {/* TaskPage */}
-            <div className="w-full px-4 sm:px-6 md:w-3/4">
+            <div className="w-full px-4 mb-10 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 items-center">
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>

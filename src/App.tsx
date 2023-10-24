@@ -11,7 +11,12 @@ import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
 import UserProfile from "./pages/UserProfile";
 import Messages from "./pages/Messages";
-
+import ProjectModal from "./components/ProjectModal";
+import TaskModal from "./components/TaskModal";
+import TaskCard from "./components/TaskCard";
+import SideBar from "./components/SideBar";
+import ProjectList from "./pages/ProjectList";
+import Calendar from "./pages/Calendar";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +26,22 @@ const router = createBrowserRouter([
   {
     path: "/auth",
     element: <Auth />,
+  },
+  {
+    path: "/projectModal",
+    element: <ProjectModal />,
+  },
+  {
+    path: "/taskModal",
+    element: <TaskModal />,
+  },
+  {
+    path: "/project",
+    element: <ProjectList />
+  },
+  {
+    path: "/card",
+    element: <TaskCard />,
   },
   {
     path: "/demo",
@@ -41,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/messages",
     element: <Messages />
+  },
+  {
+    path: "/calendar",
+    element: <Calendar />
   }
 ]);
 

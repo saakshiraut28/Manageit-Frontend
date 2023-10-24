@@ -53,7 +53,7 @@ export default function ResponsiveDrawer(props: Props) {
     const interval = setInterval(() => {
       const date = new Date();
       setCurrentDate(date);
-      setDay(date.getDate());
+      setDay(date.getDate().toString());
       setMonth(date.toLocaleString('default', { month: 'long' }));
       setDayOfWeek(date.toLocaleString('default', { weekday: 'long' }));
     }, 1000);
@@ -137,7 +137,6 @@ export default function ResponsiveDrawer(props: Props) {
       >
         <Toolbar>
           <IconButton
-            color="dark"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}

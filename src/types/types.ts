@@ -45,7 +45,7 @@ export interface commentType extends Document {
     userId: Types.ObjectId,
     userName: string,
     comment: string,
-    timestamp: Date,
+    timestamp?: Date,
 }
 
 export interface chatToType {

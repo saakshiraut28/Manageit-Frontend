@@ -9,7 +9,8 @@ import TaskPage from "./pages/TaskPage";
 import Demo from "./components/Demo"
 import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
-
+import UserProfile from "./pages/UserProfile";
+import Messages from "./pages/Messages";
 
 
 const router = createBrowserRouter([
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
     path: "/task/:taskId",
     element: <TaskPage />,
   },
+  {
+    path: "/user/:userId",
+    element: <UserProfile />
+  },
+  {
+    path: "/messages",
+    element: <Messages />
+  }
 ]);
 
 const App = () => {

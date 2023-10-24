@@ -1,5 +1,3 @@
-// import React from 'react'
-import { Link } from "react-router-dom";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material"
 import { userType } from "../types/types"
 

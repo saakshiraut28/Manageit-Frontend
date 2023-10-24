@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Stack, Chip, Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ITask } from "../types/types"
-import axios from "axios";
 import { Types } from "mongoose";
 import { makeRequest } from "../utils/api";
 import { formatDate } from "../utils/formatDate";

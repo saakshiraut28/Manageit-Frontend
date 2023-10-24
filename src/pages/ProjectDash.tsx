@@ -1,31 +1,31 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IProject } from "../types/types";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Groups2Icon from '@mui/icons-material/Groups2';
 import Task from "../components/Task";
 import { makeRequest } from "../utils/api";
 import { Types } from "mongoose";
-import { Skeleton, Typography, Popover, Button } from "@mui/material";
+import { Skeleton, Popover, Button } from "@mui/material";
 import List from "../components/Lists";
 
 const ProjectDash = () => {
     const [project, setProject] = useState<IProject>();
     const { projectId } = useParams();
-    // const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
+
+    // For members popover
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
-
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+    // To get project data from backend
     useEffect(() => {
         const getData = async () => {
             try {
@@ -46,6 +46,7 @@ const ProjectDash = () => {
                 {/* Header */}
                 <div className="flex h-14 items-center justify-between">
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
+                    {/* Members Popover */}
                     <div>
                         <Button aria-describedby={id} onClick={handleClick}>
                             <div className="flex items-center gap-2 text-black"><span className="text-xs font-semibold underline">Members</span><Groups2Icon /></div>

@@ -8,11 +8,14 @@ import { makeRequest } from "../utils/api";
 import { ITask, commentType, userType } from "../types/types";
 import { formatDate } from "../utils/formatDate";
 import { Types } from "mongoose";
+import { useRecoilState } from 'recoil';
+import { alertAtom, loadingAtom } from "../atom/global";
 
 const TaskPage = () => {
     const [comment, setComment] = useState("");
     const [task, setTask] = useState<ITask>();
     const { taskId } = useParams();
+    const [alertState, setalertState] = useRecoilState(alertAtom);
 
     const sendComment = async () => {
         const commentBody = {
@@ -24,11 +27,13 @@ const TaskPage = () => {
         setComment("");
         if (response && response.status === 200) {
             console.log("New Comment Response:", response.data);
+            setalertState({ open: true, text: response.data.msg, eventType: "success" })
+        } else {
+            setalertState({ open: true, text: response.data.msg, eventType: "error" })
         }
     };
 
     const assignees = (assignees: userType[]) => {
-        console.log(assignees);
         const combinedNames = assignees.map(user => "@" + user.name).join(', ');
         return combinedNames;
     }
@@ -89,9 +94,7 @@ const TaskPage = () => {
                             <Chip icon={<CommentIcon />} label="Comments" className="w-40 text-xl" />
                             <div className="flex gap-4 flex-col h-96 md:h-72 overflow-y-scroll">
                                 {task.comments && task.comments.length > 0 ? (
-                                    task.comments.map((comment, i) => (
-                                        <Comment key={i} comment={comment} />
-                                    ))
+                                    <Comment comments={task.comments} />
                                 ) : (
                                     <div className="flex items-center justify-center h-full text-center text-gray-700">
                                         No comments on this task. Be the first one to comment!

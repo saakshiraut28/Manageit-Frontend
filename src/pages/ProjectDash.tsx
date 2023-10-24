@@ -8,12 +8,14 @@ import { makeRequest } from "../utils/api";
 import { Types } from "mongoose";
 import { Skeleton, Popover, Button } from "@mui/material";
 import List from "../components/Lists";
+import { useRecoilState } from 'recoil';
+import { alertAtom } from "../atom/global";
 
 const ProjectDash = () => {
     const [project, setProject] = useState<IProject>();
     const { projectId } = useParams();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
+    const [alertState, setalertState] = useRecoilState(alertAtom);
 
     // For members popover
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,11 +31,10 @@ const ProjectDash = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const res = await makeRequest("/project/" + projectId, "GET")
-                console.log(res.data);
+                const res = await makeRequest("/project/" + projectId, "GET");
                 setProject(res.data.project);
             } catch (error) {
-                console.error("Error fetching project data:", error);
+                setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
             }
         };
         getData();

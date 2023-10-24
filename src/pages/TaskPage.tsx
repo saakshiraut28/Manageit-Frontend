@@ -9,7 +9,7 @@ import { ITask, commentType, userType } from "../types/types";
 import { formatDate } from "../utils/formatDate";
 import { Types } from "mongoose";
 import { useRecoilState } from 'recoil';
-import { alertAtom, loadingAtom } from "../atom/global";
+import { alertAtom } from "../atom/global";
 
 const TaskPage = () => {
     const [comment, setComment] = useState("");
@@ -45,7 +45,7 @@ const TaskPage = () => {
                 console.log(res.data.task);
                 setTask(res.data.task);
             } catch (error) {
-                console.error("Error fetching project data:", error);
+                setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
             }
         };
         getData();

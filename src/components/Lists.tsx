@@ -8,7 +8,7 @@ interface ListsProps {
 const Lists: React.FC<ListsProps> = ({ members }) => {
     return (
         <>
-            <List className="w-40">
+            <List className="w-40 max-h-72">
                 {members && members.length > 0 ? (
                     members.map(member => (
                         <ListItem disablePadding>
@@ -18,7 +18,7 @@ const Lists: React.FC<ListsProps> = ({ members }) => {
                         </ListItem>
                     ))
                 ) : (
-                    <p>No members currently. Try to add one in the project</p>
+                    <p className="p-3">No members currently. Try to add one in the project</p>
                 )}
             </List>
         </>

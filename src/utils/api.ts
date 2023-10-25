@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export const makeRequest = async (endpoint: string, method = 'GET', data = null) => {
-    // const navigate = useNavigate();
+
     const token = localStorage.getItem("token");
     if (!token) {
-        // navigate("/auth");
+        (window as any).location = "/auth";
     }
     try {
         const config = {
@@ -22,6 +21,13 @@ export const makeRequest = async (endpoint: string, method = 'GET', data = null)
 
         return result;
     } catch (error) {
+        if (error.response.data.token === false) {
+            (window as any).location = "/auth";
+        }
+        if (error.response.data.valid === false) {
+            localStorage.removeItem("token");
+            (window as any).location = "/auth";
+        }
         return error;
     }
 };

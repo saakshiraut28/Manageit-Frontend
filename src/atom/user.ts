@@ -1,18 +1,18 @@
 // Will have atom related to user
 
 import { atom } from "recoil";
-import { UserData } from "../types/types"
+import { IUser } from "../types/types"
+import { Types } from "mongoose";
 
 export const userAtom = atom({
     key: 'userAtom',
-    default: { 
-        exist: false,
+    default: {
         name: '',
-        role: 'user',
+        role: '',
         email: '',
         passwd: '',
         projects: [],
-        orgId: '',
-        chatTo: [], 
-    } as UserData
+        orgId: new Types.ObjectId,
+        chatTo: [],
+    } as IUser
 });

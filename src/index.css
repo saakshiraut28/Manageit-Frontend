@@ -16,17 +16,17 @@
 
 /* Track style */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
 }
 
 /* Handle style */
 ::-webkit-scrollbar-thumb {
-    background: #bbb5b5; 
+    background: #bbb5b5;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #979595; 
+    background: #979595;
 }
 
 /* Hide scrollbar buttons */
@@ -35,6 +35,11 @@
 }
 
 
-.accordion{
+.accordion {
     padding: 1rem !important;
+}
+
+.task-btn {
+    position: absolute !important;
+    right: 0px !important;
 }

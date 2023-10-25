@@ -10,8 +10,8 @@ const Lists: React.FC<ListsProps> = ({ members }) => {
         <>
             <List className="w-40 max-h-72">
                 {members && members.length > 0 ? (
-                    members.map(member => (
-                        <ListItem disablePadding>
+                    members.map((member, i) => (
+                        <ListItem disablePadding key={i}>
                             <ListItemButton component="a" href={"/user/" + member.userId}>
                                 <ListItemText primary={member.name} />
                             </ListItemButton>

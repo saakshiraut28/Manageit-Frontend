@@ -1,16 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { Divider, Button, Popover } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Lists from "../components/Lists";
 import AddIcon from '@mui/icons-material/Add';
+import { makeRequest } from "../utils/api";
+import { useRecoilState } from "recoil";
+import { alertAtom } from "../atom/global";
+import { userAtom } from "../atom/user";
+import { userType } from "../types/types"
 
 const Messages = () => {
-
+    const navigate = useNavigate();
     // (Used Just for demonstration)
     // Fetch messages from user array and show that instead of this
     const [messages, setMessages] = useState(false);
+    const [members, setMembers] = useState<userType[]>();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const [alertState, setalertState] = useRecoilState(alertAtom);
+    const [user, setUser] = useRecoilState(userAtom);
 
     // For members popover
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -21,6 +29,38 @@ const Messages = () => {
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+
+    // To fetch new update for user if user doesn't exist
+    useEffect(() => {
+        const getUserDetails = async () => {
+            const res = await makeRequest("/user", "GET");
+            if (res.data.user) {
+                setUser(res.data.user)
+                console.log("User updated!");
+            }
+            else navigate("/")
+        }
+        if (user.role === '') {
+            getUserDetails();
+        }
+    }, []);
+
+
+    // For fetching users in the organisation
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const res = await makeRequest("/org/" + user.orgId + "/users", "GET");
+                if (res.data?.users) {
+                    console.log(res.data);
+                    setMembers(res.data.users);
+                }
+            } catch (error) {
+                setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
+            }
+        }
+        fetchUsers();
+    }, [user])
 
     return (
         <div className="flex flex-row">
@@ -99,8 +139,12 @@ const Messages = () => {
                         }}
                     >
                         {/* Pass organisation users here! */}
-                        {/* <Lists members={} /> */}
-                        <p>Members of the organisation will appear here!</p>
+                        {members ? (
+                            <Lists members={members} />
+                        )
+                            : (
+                                <p>Members of the organisation will appear here!</p>
+                            )}
                     </Popover>
                 </div>
             </div>

@@ -6,6 +6,10 @@ import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import HomeIcon from '@mui/icons-material/Home';
+import AddIcon from "@mui/icons-material/Add";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../atom/user";
+
 
 const SideBar = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -17,6 +21,7 @@ const SideBar = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const [user, setUser] = useRecoilState(userAtom);
 
     const style = {
         border: "none",
@@ -25,18 +30,12 @@ const SideBar = () => {
     };
 
     useEffect(() => {
-        // Update the current date every second
-        const interval = setInterval(() => {
-            const date = new Date();
-            setCurrentDate(date);
-            setDay(date.getDate().toString());
-            setMonth(date.toLocaleString('default', { month: 'long' }));
-            setDayOfWeek(date.toLocaleString('default', { weekday: 'long' }));
-        }, 1000);
-
-        return () => {
-            clearInterval(interval);
-        };
+        // For the date in the sidebar
+        const date = new Date();
+        setCurrentDate(date);
+        setDay(date.getDate().toString());
+        setMonth(date.toLocaleString('default', { month: 'long' }));
+        setDayOfWeek(date.toLocaleString('default', { weekday: 'long' }));
     }, []);
 
     return (
@@ -48,10 +47,11 @@ const SideBar = () => {
                     <ListItem>
                         {/* Organization Name */}
                         <Typography>
-                            <div className="text-2xl font-bold -mt-12">PushNote.</div>
+                            <span className="text-2xl font-bold -mt-12 block">PushNote.</span>
                         </Typography>
                     </ListItem>
                     <Divider />
+
                     {/* Project Accordion */}
                     <Accordion sx={style}>
                         <AccordionSummary
@@ -62,14 +62,18 @@ const SideBar = () => {
                             <div className="flex"><CollectionsBookmarkIcon color="action" /><span className="pl-3 font-bold"> Projects</span></div>
                         </AccordionSummary>
 
-                        <Link to="/project/project1">
-                            <AccordionDetails className="accordion hover:border-l-4 hover:border-[#FF0000] hover:bg-[#E8E8E8] transition-all">Project1</AccordionDetails>
-                        </Link>
-                        <Link to="/project/project1">
-                            <AccordionDetails className="accordion hover:border-l-4 hover:border-[#FF0000] hover:bg-[#E8E8E8] transition-all">Project2</AccordionDetails>
-                        </Link>
+                        {user?.role !== "user" && <Link to="/addproject">
+                            <AccordionDetails className="accordion font-semibold flex items-center gap-1 hover:border-l-4 hover:border-blue-500 hover:bg-[#E8E8E8] transition-all">Create New Project <AddIcon color="action" /></AccordionDetails>
+                        </Link>}
+
+                        {user?.projects?.map((project, i) => (
+                            <Link key={i} to={"/project/" + project?.projectId}>
+                                <AccordionDetails className="accordion hover:border-l-4 hover:border-[#FF0000] hover:bg-[#E8E8E8] transition-all">{project?.name}</AccordionDetails>
+                            </Link>
+                        ))}
                     </Accordion>
                     <Divider />
+
                     {/* Calendar */}
                     <Link to="/calendar">
                         <ListItem>

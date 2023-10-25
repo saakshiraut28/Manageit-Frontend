@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Input, Stack, Chip, Button, useStepContext, Skeleton } from "@mui/material";
 import CommentIcon from '@mui/icons-material/Comment';
 import SendIcon from '@mui/icons-material/Send';
@@ -11,12 +11,16 @@ import { Types } from "mongoose";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
 import SideBar from "../components/SideBar";
+import EditIcon from '@mui/icons-material/Edit';
+import { userAtom } from '../atom/user';
 
 const TaskPage = () => {
     const [comment, setComment] = useState("");
     const [task, setTask] = useState<ITask>();
     const { taskId } = useParams();
     const [alertState, setalertState] = useRecoilState(alertAtom);
+    const [user, setUser] = useRecoilState(userAtom);
+    const navigate = useNavigate();
 
     const sendComment = async () => {
         const commentBody = {
@@ -39,11 +43,26 @@ const TaskPage = () => {
         return combinedNames;
     }
 
+    // To fetch new update for user if user doesn't exist
+    useEffect(() => {
+        const getUserDetails = async () => {
+            const res = await makeRequest("/user", "GET");
+            if (res.data.user) {
+                setUser(res.data.user)
+                console.log("User updated!");
+            }
+            else navigate("/")
+        }
+        if (user.role === '') {
+            getUserDetails();
+        }
+    }, [])
+
+    // To fetch task data from backend
     useEffect(() => {
         const getData = async () => {
             try {
                 const res = await makeRequest("/task/" + taskId, "GET")
-                console.log(res.data.task);
                 setTask(res.data.task);
             } catch (error) {
                 setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
@@ -58,8 +77,9 @@ const TaskPage = () => {
             {/* TaskPage */}
             <div className="w-full px-4 mb-10 lg:mb-2 sm:px-6 lg:w-3/4">
                 {/* Header */}
-                <div className="flex h-14 items-center">
+                <div className="flex h-14 justify-between items-center">
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
+                    <button className="text-md flex items-center"><EditIcon /> Edit</button>
                 </div>
                 {/* Task Details */}
                 {task ? (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,21 +15,25 @@ const Auth = () => {
   const [alertState, setalertState] = useRecoilState(alertAtom);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [])
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // If new user, it must be org signup
     if (newUser) {
-      console.log("check new user");
       handleAuth("orgSignup", "/org/signup");
     }
     // If login as is user
     if (loginAs === "user") {
-      console.log("check user login");
       handleAuth("user", "/auth/login");
     }
     // In case login as is org
     else if (loginAs === "org") {
-      console.log("check org login");
       handleAuth("orgLogin", "/org/login");
     }
   }

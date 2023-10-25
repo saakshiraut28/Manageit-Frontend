@@ -18,7 +18,6 @@ import Loading from "./components/Loading";
 import ProjectModal from "./components/ProjectModal";
 import TaskModal from "./components/TaskModal";
 import TaskCard from "./components/TaskCard";
-import SideBar from "./components/SideBar";
 import Chat from "./components/Chat";
 
 const router = createBrowserRouter([

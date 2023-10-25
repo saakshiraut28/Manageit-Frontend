@@ -21,7 +21,8 @@ const Task: React.FC<TaskProps> = ({ taskId, projectId }) => {
         const getData = async () => {
             try {
                 const res = await makeRequest("/task/" + taskId, "GET");
-                setTask(res.data.task);
+                if (res.data.task)
+                    setTask(res.data.task);
             } catch (error) {
                 setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
             }
@@ -40,7 +41,7 @@ const Task: React.FC<TaskProps> = ({ taskId, projectId }) => {
                     <Stack direction="row" spacing={1} className="flex flex-wrap gap-2">
                         <Chip variant="outlined" size="small" color="primary" label={task.assignedBy ? "Assigned By: @" + task.assignedBy.name : "No Assignee"} />
                         <Chip size="small" color="warning" variant="outlined" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} />
-                        <Chip size="small" color="success" label={task.status || "No status"} />
+                        <Chip size="small" color={task.status === "completed" ? "success" : "info"} label={task.status || "No status"} className="m-2" />
                     </Stack>
                 </Link>
             ) : (

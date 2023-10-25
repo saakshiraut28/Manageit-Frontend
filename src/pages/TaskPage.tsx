@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Input, Stack, Chip, Button, useStepContext, Skeleton } from "@mui/material";
+import { Input, Stack, Chip, Button, Skeleton } from "@mui/material";
 import CommentIcon from '@mui/icons-material/Comment';
 import SendIcon from '@mui/icons-material/Send';
 import Comment from "../components/Comment";
@@ -24,8 +24,8 @@ const TaskPage = () => {
 
     const sendComment = async () => {
         const commentBody = {
-            userId: new Types.ObjectId("653587e58931b3d02a955ed5"),
-            userName: "user",
+            userId: user._id,
+            userName: user.name,
             comment: comment
         };
         const response = await makeRequest(`/task/${taskId}/comment`, "POST", commentBody);
@@ -39,6 +39,9 @@ const TaskPage = () => {
     };
 
     const assignees = (assignees: userType[]) => {
+        if (assignees.length < 1) {
+            return "No assignee";
+        }
         const combinedNames = assignees.map(user => "@" + user.name).join(', ');
         return combinedNames;
     }
@@ -79,7 +82,7 @@ const TaskPage = () => {
                 {/* Header */}
                 <div className="flex h-14 justify-between items-center">
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
-                    <button className="text-md flex items-center"><EditIcon /> Edit</button>
+                    {user.role !== "user" && <button className="text-md flex items-center"><EditIcon /> Edit</button>}
                 </div>
                 {/* Task Details */}
                 {task ? (
@@ -88,7 +91,7 @@ const TaskPage = () => {
                             <h1 className="text-4xl font-bold mb-2"> {task.name} <span className="block sm:inline">
                                 <Chip variant="outlined" size="small" color="primary" label={"Assigned By: @" + task.assignedBy.name} className="m-2" />
                                 <Chip size="small" color="warning" variant="outlined" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} className="m-2" />
-                                <Chip size="small" color="success" label={task.status || "No status"} className="m-2" />
+                                <Chip size="small" color={task.status === "completed" ? "success" : "info"} label={task.status || "No status"} className="m-2" />
                             </span>
                             </h1>
                             <Stack>

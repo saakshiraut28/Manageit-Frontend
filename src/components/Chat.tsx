@@ -28,9 +28,10 @@ const Chat = () => {
                     <Divider />
                     {/* Message Container */}
                     <div className="flex flex-col">
+                        {/* Receiver Name */}
                         <h1 className="text-xl bg-gray-300 p-3 pl-5 mb-4">Saakshi Raut</h1>
                         <div className="flex gap-4 flex-col mb-10 h-[50vh] overflow-y-scroll lg:h-[60vh] lg:mb-2">
-                            {/* Example of other user message */}
+                            {/* Example of receiver message */}
                             <div className="mr-2">
                                 <div className="mb-3">
                                     <Link to={"/user/"} className="inline underline text-lg">@userName</Link> <span className="text-xs text-gray-500 pl-2">
@@ -41,7 +42,7 @@ const Chat = () => {
                                 <div className="bg-gray-200 border-l-4 border-gray-400 p-5">message</div>
                             </div>
 
-                            {/* For primary user message */}
+                            {/* For sender user message */}
                             <div className="mr-2 flex flex-col text-right items-end">
                                 <div className="mb-3">
                                     <Link to={"/user/"} className="inline underline text-lg">@me</Link> <span className="text-xs text-gray-500 pl-2">

@@ -70,7 +70,7 @@ const ProjectDash = () => {
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
                     {/* Members Popover */}
                     <div className="flex flex-wrap">
-                        <Button variant="text" aria-describedby={id} onClick={handleClick} className="flex items-center gap-2 text-blue-500"><span className="hidden sm:block">Add User</span><PersonAddIcon /></Button>
+                        {user.role !== "user" && <Button variant="text" aria-describedby={id} onClick={handleClick} className="flex items-center gap-2 text-blue-500"><span className="hidden sm:block">Add User</span><PersonAddIcon /></Button>}
                         <Popover
                             id={id}
                             open={open}
@@ -113,7 +113,7 @@ const ProjectDash = () => {
                     <div className="flex flex-col gap-4">
                         <div className="my-3 flex justify-between">
                             <h1 className="text-4xl font-bold"> {project.name} <span className="block mt-2 text-sm font-thin sm:inline"> Created By: @<Link to={"/user/" + project.createdBy.userId}>{project.createdBy.name}</Link> </span></h1>
-                            <button className="text-md flex items-center"><EditIcon /> Edit</button>
+                            {user.role !== "user" && <button className="text-md flex items-center"><EditIcon /> Edit</button>}
                         </div>
                         <div>
                             <span className="font-semibold">Description: </span>
@@ -123,12 +123,12 @@ const ProjectDash = () => {
                         <div className="border-2 min-h-fit my-4 py-4 p-2 md:p-4 rounded-lg flex flex-col gap-4">
                             <div className="w-full relative">
                                 <h1 className="text-start md:text-center font-semibold text-xl inline-flex">Task History</h1>
-                                <Button variant="text" className="text-blue-500 task-btn">Create Task</Button>
+                                {user.role !== "user" && <Button variant="text" className="text-blue-500 task-btn">Create Task</Button>}
                             </div>
                             <div className="flex gap-4 flex-col">
                                 {project.tasks && project.tasks.length > 0 ? (
-                                    project.tasks.map((taskId, i) => (
-                                        <Task key={i} taskId={taskId} projectId={new Types.ObjectId(projectId)} />
+                                    project.tasks.map((task, i) => (
+                                        <Task key={i} taskId={new Types.ObjectId(task.taskId)} projectId={new Types.ObjectId(projectId)} />
                                     ))
                                 ) : (
                                     <div className="flex items-center justify-center h-32 text-center text-gray-700">

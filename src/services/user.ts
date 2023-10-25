@@ -8,7 +8,7 @@ export const getUserData = async (endpoint: string) => {
     try {
         const token = localStorage.getItem("token");
         if (!token) {
-            redirect("/auth");
+            (window as any).location = "/auth";
         }
         const resp = await fetch(url + endpoint, {
             method: "GET",
@@ -18,10 +18,6 @@ export const getUserData = async (endpoint: string) => {
             },
         });
         const respObj = await resp.json();
-        if (respObj?.valid === "false") {
-            localStorage.removeItem("token");
-            redirect("/auth");
-        }
         return respObj;
     }
     catch (err) {

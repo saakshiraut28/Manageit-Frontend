@@ -1,22 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+// Pages
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ProjectDash from "./pages/ProjectDash";
 import TaskPage from "./pages/TaskPage";
+import UserProfile from "./pages/UserProfile";
+import Messages from "./pages/Messages";
+import ProjectList from "./pages/ProjectList";
+import Calendar from "./pages/Calendar";
 
 //      Components
 import Demo from "./components/Demo"
 import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
-import UserProfile from "./pages/UserProfile";
-import Messages from "./pages/Messages";
 import ProjectModal from "./components/ProjectModal";
 import TaskModal from "./components/TaskModal";
 import TaskCard from "./components/TaskCard";
 import SideBar from "./components/SideBar";
-import ProjectList from "./pages/ProjectList";
-import Calendar from "./pages/Calendar";
+import Chat from "./components/Chat";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +69,10 @@ const router = createBrowserRouter([
   {
     path: "/calendar",
     element: <Calendar />
+  },
+  {
+    path: "/chat/:chatId",
+    element: <Chat />
   }
 ]);
 

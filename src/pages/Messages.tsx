@@ -31,6 +31,7 @@ const Messages = () => {
                 <div className="flex h-14 items-center">
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
                 </div>
+
                 <div className="container">
                     <h1 className="text-2xl font-semibold ml-2 py-2 pb-6">Message Inbox</h1>
                     <Divider />
@@ -78,9 +79,10 @@ const Messages = () => {
                     </div>
                 </div>
 
+                {/* Button on bottom right for new message */}
                 <div className="text-right">
                     <Button aria-describedby={id} onClick={handleClick}>
-                        <div className="bg-blue-500 text-gray-800 w-10 h-10 flex items-center justify-center rounded-full"><AddIcon /></div>
+                        <div className="bg-[#1976d2] text-[rgba(0,0,0,0.6)] w-10 h-10 flex items-center justify-center rounded-full"><AddIcon /></div>
                     </Button>
                     <Popover
                         id={id}
@@ -98,6 +100,7 @@ const Messages = () => {
                     >
                         {/* Pass organisation users here! */}
                         {/* <Lists members={} /> */}
+                        <p>Members of the organisation will appear here!</p>
                     </Popover>
                 </div>
             </div>

@@ -1,5 +1,4 @@
-import MenuIcon from "@mui/icons-material/Menu";
-import { AppBar, Box, IconButton, Typography, Toolbar, ListItem, List, Drawer, Divider, Modal, Accordion, AccordionDetails, AccordionSummary, Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { Typography, Toolbar, ListItem, List, Divider, Accordion, AccordionDetails, AccordionSummary, Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -45,7 +44,7 @@ const SideBar = () => {
             {/* Left sidebar */}
             <div className="hidden lg:block w-1/5 h-screen">
                 <Toolbar />
-                <List >
+                <List>
                     <ListItem>
                         {/* Organization Name */}
                         <Typography>
@@ -60,7 +59,7 @@ const SideBar = () => {
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <div className="flex"><CollectionsBookmarkIcon /><span className="pl-3 font-bold"> Projects</span></div>
+                            <div className="flex"><CollectionsBookmarkIcon color="action" /><span className="pl-3 font-bold"> Projects</span></div>
                         </AccordionSummary>
 
                         <Link to="/project/project1">
@@ -80,10 +79,10 @@ const SideBar = () => {
                                 </span>
                                 <br />
                                 <span >
-                                    <span className="font-bold text-2xl">
+                                    <span className="font-bold text-2xl text-gray-700">
                                         {day}
                                     </span>
-                                    <span className="font-semibold text-lg">
+                                    <span className="font-semibold text-lg px-1">
                                         {dayOfWeek}
                                     </span>
                                 </span>
@@ -95,7 +94,7 @@ const SideBar = () => {
                     {/* Chat  */}
                     <Link to="/messages">
                         <ListItem className="mt-2">
-                            <div className="flex "><MarkChatUnreadIcon /><span className="pl-4 font-bold"> Chats</span></div>
+                            <div className="flex "><MarkChatUnreadIcon color="action" /><span className="pl-4 font-bold"> Chats</span></div>
                         </ListItem>
                     </Link>
                 </List>

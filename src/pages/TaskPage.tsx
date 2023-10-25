@@ -102,7 +102,7 @@ const TaskPage = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className="">
+                            <div>
                                 <Input placeholder="Type your message...." required={true} value={comment} onChange={(e) => setComment(e.target.value)} className="w-full px-2 pr-12 -mr-16" />
                                 <Button endIcon={<SendIcon />} type="button" disabled={!comment} onClick={sendComment} />
                             </div>

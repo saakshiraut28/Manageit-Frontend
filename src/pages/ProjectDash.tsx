@@ -132,7 +132,7 @@ const ProjectDash = () => {
                                     ))
                                 ) : (
                                     <div className="flex items-center justify-center h-32 text-center text-gray-700">
-                                        Currently no Tasks are available in the project. Create one and keep a check on your progress.
+                                        Currently no project are available. Tell you manager to add you in one.
                                     </div>
                                 )}
                             </div>

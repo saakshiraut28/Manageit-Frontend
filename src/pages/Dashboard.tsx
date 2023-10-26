@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil';
 import { userAtom } from '../atom/user';
 import { makeRequest } from '../utils/api';
 import { Skeleton } from '@mui/material';
+import UserProject from '../components/UserProject';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -40,28 +41,21 @@ const Dashboard = () => {
     <div className="flex flex-row">
       <SideBar />
       {/* Mid Dashboard Section */}
-      <div className="lg:w-3/5 px-4 md:px-4">
+      <div className="w-screen lg:w-3/5 px-4 md:px-4">
         {user.role !== "" ? (
           <>
             <div className="py-6 text-center border-b-2 md:text-start">
               <h1 className="text-2xl md:text-3xl font-semibold my-2">Wassup <span className="text-[rgba(0,0,0,0.6)]">{user.name}</span></h1>
               <h3 className="text-lg md:text-xl font-semibold">Let's get you started with pending's task ;)</h3>
             </div>
-            <div className="flex gap-4 flex-col py-5 mb-10 md:mb-2 md:h-[80vh] md:overflow-y-scroll">
-              {/* {user.projects && user.projects?.length > 0 ? (
-            // project.map((taskId, i) => (
-            // <Task key={i} taskId={taskId} projectId={new Types.ObjectId(projectId)} />
-            // ))
-            // ) : (
-            // )} */}
-
-              {task ? (
-                <>
-                  {/* <DashTask taskId={} /> */}
-                </>
+            <div className="flex gap-4 flex-col px-2 py-5 mb-10 md:mb-2 md:h-[80vh] md:overflow-y-scroll">
+              {user.projects && user.projects.length > 0 ? (
+                user.projects.map((project, i) => (
+                  <UserProject key={i} project={project} />
+                ))
               ) : (
-                <div className="flex items-center justify-center h-[65vh] text-center text-gray-700">
-                  Currently no Tasks are available in the project. Your manager must be looking for ways to keep you busy.
+                <div className="flex items-center justify-center h-32 text-center text-gray-700">
+                  Currently no Tasks are available in the project. Create one and keep a check on your progress.
                 </div>
               )}
             </div>

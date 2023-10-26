@@ -13,6 +13,7 @@ import SideBar from "../components/SideBar";
 import EditIcon from "@mui/icons-material/Edit";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { userAtom } from '../atom/user';
+import TaskModal from "../components/TaskModal";
 
 const ProjectDash = () => {
     const [project, setProject] = useState<IProject>();
@@ -109,7 +110,6 @@ const ProjectDash = () => {
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
                     {/* Members Popover */}
                     <div className="flex flex-wrap">
-
                         <div className="relative">
                             {user.role !== "user" && <Button variant="text" onClick={handleOpenModal} className="flex items-center gap-2 text-blue-500"><span className="hidden sm:block">Add User</span><PersonAddIcon /></Button>}
                             <Modal
@@ -171,9 +171,9 @@ const ProjectDash = () => {
                         </div>
                         {/* Task History */}
                         <div className="border-2 min-h-fit my-4 py-4 p-2 md:p-4 rounded-lg flex flex-col gap-4">
-                            <div className="w-full relative">
+                            <div className="w-full relative flex justify-between">
                                 <h1 className="text-start md:text-center font-semibold text-xl inline-flex">Task History</h1>
-                                {user.role !== "user" && <Button variant="text" className="text-blue-500 task-btn">Create Task</Button>}
+                                {user.role !== "user" && <TaskModal />}
                             </div>
                             <div className="flex gap-4 flex-col">
                                 {project.tasks && project.tasks.length > 0 ? (

@@ -1,20 +1,28 @@
+import { redirect } from "react-router-dom";
+
 // dev url
 const url = "http://localhost:8000"
 // prod url
 
-export const getUserData = async (token) => {
+export const getUserData = async (endpoint: string) => {
     try {
-        const resp = await fetch(`${url}/${token}`,{
-            method:"GET",
-            headers:{
+        const token = localStorage.getItem("token");
+        if (!token) {
+            (window as any).location = "/auth";
+        }
+        const resp = await fetch(url + endpoint, {
+            method: "GET",
+            headers: {
                 'Content-Type': 'application/json',
+                'Authorization': token
             },
-        })
-        const respObj = await resp.json() ;
+        });
+        const respObj = await resp.json();
         return respObj;
     }
-    catch(err) {
-        console.log("Some error occurred", err) ;
-        return {msg: "Internal server error", user: null};
+    catch (err) {
+        console.log("Some error occurred", err);
+        localStorage.removeItem("token");
+        return { msg: "Internal server error", user: null };
     }
 }

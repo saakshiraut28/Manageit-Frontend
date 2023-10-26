@@ -15,7 +15,7 @@ const bull = (
   </Box>
 );
 
-export default function taskCard() {
+export default function TaskCard() {
   return (
     <div className='border-black border-2 rounded-lg mx-4 '>
         <Accordion classes={'border-none px-2'}>

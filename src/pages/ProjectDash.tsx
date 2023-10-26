@@ -38,15 +38,15 @@ const ProjectDash = () => {
     const handleCloseModal = () => setOpen(false);
 
     const addUser = async (member: userType) => {
-        console.log("Member to be added: ", member);
         try {
             const res = await makeRequest("/project/" + projectId + "/users", "POST", member);
             if (res.data) {
                 setalertState({ open: true, text: "User Added Successfully!", eventType: "success" });
                 setOpen(false);
+                window.location.reload();
             }
         } catch (error) {
-            setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" });
+            setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "error" });
         }
     }
 
@@ -154,7 +154,7 @@ const ProjectDash = () => {
                                 horizontal: 'center',
                             }}
                         >
-                            <Lists members={project?.users} />
+                            <Lists members={project?.users} showDelete={true} admin={user.role === "admin"} userId={user._id} />
                         </Popover>
                     </div>
                 </div>

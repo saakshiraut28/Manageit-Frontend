@@ -26,7 +26,7 @@ export default function TaskModal() {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <>
       <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         keepMounted
@@ -82,6 +82,6 @@ export default function TaskModal() {
           </form>
         </Box> 
       </Modal>
-    </div>
+    </>
   );
 }

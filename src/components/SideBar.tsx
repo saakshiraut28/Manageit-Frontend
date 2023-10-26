@@ -9,6 +9,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from "@mui/icons-material/Add";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../atom/user";
+import ProjectModal from "./ProjectModal";
 
 
 const SideBar = () => {
@@ -17,6 +18,7 @@ const SideBar = () => {
     const [month, setMonth] = useState('');
     const [dayOfWeek, setDayOfWeek] = useState('');
     const [value, setValue] = useState(0);
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -69,9 +71,7 @@ const SideBar = () => {
                             <div className="flex"><CollectionsBookmarkIcon color="action" /><span className="pl-3 font-bold"> Projects</span></div>
                         </AccordionSummary>
 
-                        {user?.role !== "user" && <Link to="/addproject">
-                            <AccordionDetails className="accordion font-semibold flex items-center gap-1 hover:border-l-4 hover:border-blue-500 hover:bg-[#E8E8E8] transition-all">Create New Project <AddIcon color="action" /></AccordionDetails>
-                        </Link>}
+                        {user?.role !== "user" && <AccordionDetails className="accordion font-semibold flex items-center gap-1 hover:border-l-4 hover:border-blue-500 hover:bg-[#E8E8E8] transition-all"><ProjectModal /></AccordionDetails>}
 
                         {user?.projects?.map((project, i) => (
                             <Link key={i} to={"/project/" + project?.projectId}>

@@ -140,7 +140,7 @@ const Messages = () => {
                     >
                         {/* Pass organisation users here! */}
                         {members ? (
-                            <Lists members={members} />
+                            <Lists members={members} showDelete={false} admin={false} userId={null} />
                         )
                             : (
                                 <p>Members of the organisation will appear here!</p>

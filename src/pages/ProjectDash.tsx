@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { IProject } from "../types/types";
+import { IProject, userType } from "../types/types";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Groups2Icon from '@mui/icons-material/Groups2';
 import Task from "../components/Task";
 import { makeRequest } from "../utils/api";
 import { Types } from "mongoose";
-import { Skeleton, Popover, Button } from "@mui/material";
-import List from "../components/Lists";
+import { Skeleton, Popover, Button, List, ListItem, ListItemButton, ListItemText, Popper, Modal, Typography, Box } from "@mui/material";
+import Lists from "../components/Lists";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
 import SideBar from "../components/SideBar";
@@ -20,7 +20,9 @@ const ProjectDash = () => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const [alertState, setalertState] = useRecoilState(alertAtom);
     const [user, setUser] = useRecoilState(userAtom);
+    const [openModal, setOpen] = useState(false);
     const navigate = useNavigate();
+    const [addUsers, setAddUsers] = useState<userType[]>([]);
 
     // For members popover
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -31,6 +33,22 @@ const ProjectDash = () => {
     };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+
+    const handleOpenModal = () => setOpen(true);
+    const handleCloseModal = () => setOpen(false);
+
+    const addUser = async (member: userType) => {
+        console.log("Member to be added: ", member);
+        try {
+            const res = await makeRequest("/project/" + projectId + "/users", "POST", member);
+            if (res.data) {
+                setalertState({ open: true, text: "User Added Successfully!", eventType: "success" });
+                setOpen(false);
+            }
+        } catch (error) {
+            setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" });
+        }
+    }
 
     // To fetch new update for user if user doesn't exist
     useEffect(() => {
@@ -61,6 +79,27 @@ const ProjectDash = () => {
         getData();
     }, [projectId]);
 
+    // To fetch members for adding in the organisation
+    useEffect(() => {
+        const getMembers = async () => {
+            try {
+                const res = await makeRequest("/org/" + project.orgId + "/users", "GET");
+                const users: userType[] = res.data?.users;
+                const filteredUsers = users.filter(user => {
+                    return !project.users.some(projectUser => projectUser.userId === user.userId);
+                });
+                console.log("Filtered Users: ", filteredUsers);
+                if (filteredUsers) {
+                    setAddUsers(filteredUsers);
+                }
+            } catch (error) {
+                setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
+            }
+        }
+        if (project)
+            getMembers();
+    }, [project])
+
     return (
         <div className="flex flex-row">
             <SideBar />
@@ -70,23 +109,34 @@ const ProjectDash = () => {
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
                     {/* Members Popover */}
                     <div className="flex flex-wrap">
-                        {user.role !== "user" && <Button variant="text" aria-describedby={id} onClick={handleClick} className="flex items-center gap-2 text-blue-500"><span className="hidden sm:block">Add User</span><PersonAddIcon /></Button>}
-                        <Popover
-                            id={id}
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'center',
-                            }}
-                        >
-                            <List members={project?.users} />
-                        </Popover>
+
+                        <div className="relative">
+                            {user.role !== "user" && <Button variant="text" onClick={handleOpenModal} className="flex items-center gap-2 text-blue-500"><span className="hidden sm:block">Add User</span><PersonAddIcon /></Button>}
+                            <Modal
+                                open={openModal}
+                                onClose={handleCloseModal}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <div className="flex absolute right-60 top-4">
+                                    <List className="w-40 max-h-72 bg-white">
+                                        {addUsers && addUsers.length > 0 ? (
+                                            addUsers.map((member, i) => (
+                                                <ListItem disablePadding key={i}>
+                                                    <ListItemButton onClick={() => {
+                                                        addUser(member);
+                                                    }}>
+                                                        <ListItemText primary={member.name} />
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            ))
+                                        ) : (
+                                            <p className="p-3">No members to add in the project. Invite members to your organisation!</p>
+                                        )}
+                                    </List>
+                                </div>
+                            </Modal>
+                        </div>
                         <Button aria-describedby={id} onClick={handleClick}>
                             <div className="flex items-center gap-2 text-blue-500"><span className="hidden md:text-md sm:block">Members</span><Groups2Icon /></div>
                         </Button>
@@ -104,7 +154,7 @@ const ProjectDash = () => {
                                 horizontal: 'center',
                             }}
                         >
-                            <List members={project?.users} />
+                            <Lists members={project?.users} />
                         </Popover>
                     </div>
                 </div>

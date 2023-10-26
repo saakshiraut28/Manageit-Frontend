@@ -7,7 +7,6 @@ import Comment from "../components/Comment";
 import { makeRequest } from "../utils/api";
 import { ITask, commentType, userType } from "../types/types";
 import { formatDate } from "../utils/formatDate";
-import { Types } from "mongoose";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
 import SideBar from "../components/SideBar";

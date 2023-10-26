@@ -52,6 +52,13 @@ const SideBar = () => {
                     </ListItem>
                     <Divider />
 
+                    <Link to="/">
+                        <ListItem className="mt-2">
+                            <div className="flex "><HomeIcon color="action" /><span className="pl-4 font-bold"> Home</span></div>
+                        </ListItem>
+                    </Link>
+                    <Divider />
+
                     {/* Project Accordion */}
                     <Accordion sx={style}>
                         <AccordionSummary
@@ -101,6 +108,7 @@ const SideBar = () => {
                             <div className="flex "><MarkChatUnreadIcon color="action" /><span className="pl-4 font-bold"> Chats</span></div>
                         </ListItem>
                     </Link>
+                    <Divider />
                 </List>
             </div>
             {/* Bottom navbar */}

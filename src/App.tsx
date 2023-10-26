@@ -70,7 +70,7 @@ const router = createBrowserRouter([
     element: <Calendar />
   },
   {
-    path: "/chat/:chatId",
+    path: "/chat/:name/:userId",
     element: <Chat />
   }
 ]);

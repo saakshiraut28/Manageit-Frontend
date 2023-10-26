@@ -1,16 +1,83 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import { Button, Divider, Input } from "@mui/material"
 import SideBar from "./SideBar"
 import SmsRoundedIcon from '@mui/icons-material/SmsRounded';
 import SendIcon from "@mui/icons-material/Send";
+import { userAtom } from "../atom/user"
+import { useRecoilState } from "recoil";
+import { makeRequest } from "../utils/api"
+import { io } from 'socket.io-client'
+import { useParams } from 'react-router-dom';
+
+const backend = 'http://localhost:8000' ;
+
+const myChatDiv = "justify-start"
+const senderChatDiv = "justify-end"
+const myChatP = "bg-green-500 rounded-tl-none rounded-tr-md rounded-br-md rounded-bl-md"
+const senderChatP = "bg-blue-500 rounded-tl-md rounded-tr-none rounded-br-md rounded-bl-md"
 
 const Chat = () => {
-    const [message, setMessage] = useState("");
+    const [user, setUser] = useRecoilState(userAtom);
+    const [socket, setsocket] = useState(null) ;
+    const [Chats, setChats] = useState([]) ;
+    const { name: recieverName, userId: recieverId } = useParams();
+
+    useEffect(() => {
+        const getUserDetails = async () => {
+            const res = await makeRequest("/user", "GET");
+            if (res.data.user) {
+                setUser(res.data.user)
+                console.log("User updated!");
+            }
+        }
+        getUserDetails();
+    }, [])
+
+    useEffect(() => {
+        if (user.role==='') return;
+        const ID = user._id;
+        console.log("ID =>",ID) ;
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const skt = io(backend) ;
+        skt.on('connect',() => {
+          console.log(`you are connected`) ;
+        })
+        skt.emit('join',ID) ;
+        // const users = [2] ;
+        // users.forEach((elem)=> {
+        //   skt.emit('join',elem) ;
+        // })
+    
+        // recieve msg
+        skt.on('recieved-msg',(recID, senderId, msg) => {
+        //   if (senderId===ID) return;
+          // if (currChat._id===recId) {
+          //   // console.log("here") ;
+          //   setCurrChat(prevData => ({
+          //     ...prevData,
+          //     user_msg: [...prevData.user_msg, {_id:'', user: senderId, msg: msg} ]
+          //   }))
+          // }
+          setChats(prev => ([...prev,{message: msg, senderId: senderId}])) ;
+        })
+        setsocket(skt) ;
+
+        return () => {
+            skt.disconnect() ;
+        };
+    }, [user])
+    
 
     // Handle Send message func here!
-    const sendMessage = () => {
-        console.log(message);
+    const sendMessage = (e) => {
+        e.preventDefault() ;
+        // const recieverID = e.target.recId.value ;
+        const msg = e.target.msg.value ;
+        console.log(recieverId,msg,user._id) ;
+        socket.emit('new-chat',({recID: recieverId, sender: user._id, msg: msg})) ;
+        setChats(prev => ([...prev,{message: msg, senderId: user._id}])) ;
     }
 
     return (
@@ -29,34 +96,21 @@ const Chat = () => {
                     {/* Message Container */}
                     <div className="flex flex-col">
                         {/* Receiver Name */}
-                        <h1 className="text-xl bg-gray-300 p-3 pl-5 mb-4">Saakshi Raut</h1>
+                        <h1 className="text-xl bg-gray-300 p-3 pl-5 mb-4">{recieverName}</h1>
                         <div className="flex gap-4 flex-col mb-10 h-[50vh] overflow-y-scroll lg:h-[60vh] lg:mb-2">
                             {/* Example of receiver message */}
-                            <div className="mr-2">
-                                <div className="mb-3">
-                                    <Link to={"/user/"} className="inline underline text-lg">@userName</Link> <span className="text-xs text-gray-500 pl-2">
-                                        {/* {calculateTime(comment.timestamp) || ""}  */}
-                                        3 days ago
-                                    </span>
+                            {Chats.map((elem,ind)=> (
+                                <div key={ind} className={`w-full flex flex-row ${elem.senderId===user._id? myChatDiv: senderChatDiv}`}>
+                                    <p className={`mx-2 py-1 px-1 text-white ${elem.senderId===user._id? myChatP: senderChatP}`}>{elem.message}</p>
                                 </div>
-                                <div className="bg-gray-200 border-l-4 border-gray-400 p-5">message</div>
-                            </div>
-
-                            {/* For sender user message */}
-                            <div className="mr-2 flex flex-col text-right items-end">
-                                <div className="mb-3">
-                                    <Link to={"/user/"} className="inline underline text-lg">@me</Link> <span className="text-xs text-gray-500 pl-2">
-                                        {/* {calculateTime(comment.timestamp) || ""}  */}
-                                        just now
-                                    </span>
-                                </div>
-                                <div className="bg-blue-400 border-r-4 border-gray-400 p-5 w-full">message</div>
-                            </div>
+                            ))}
                         </div>
-                        <div className="pt-1">
-                            <Input placeholder="Type your message...." required={true} value={message} onChange={(e) => setMessage(e.target.value)} className="w-full px-2 pr-12 -mr-16" />
-                            <Button endIcon={<SendIcon />} type="button" disabled={!message} onClick={sendMessage} />
-                        </div>
+                        <form onSubmit={sendMessage}  className="pt-1 flex flex-row">
+                            {/* <Input placeholder="Type your message...." required={true} value={message} onChange={(e) => setMessage(e.target.value)} className="w-full px-2 pr-12 -mr-16" /> */}
+                            {/* <Button endIcon={<SendIcon />} type="button" disabled={!message} onClick={sendMessage} /> */}
+                            <input type="text" placeholder="Send message..." name="msg" className="w-full p-2 mr-2"/>
+                            <button type="submit" className=""><SendIcon /></button>
+                        </form>
                     </div>
                 </div>
             </div>

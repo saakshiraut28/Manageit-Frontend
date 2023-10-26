@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { makeRequest } from "../utils/api"
 import { io } from 'socket.io-client'
 import { useParams } from 'react-router-dom';
+import { getChatById, sendChatToDb } from "../services/chat";
 
 const backend = 'http://localhost:8000' ;
 
@@ -29,6 +30,17 @@ const Chat = () => {
             if (res.data.user) {
                 setUser(res.data.user)
                 console.log("User updated!");
+                const prevChat = res.data.user.chatTo.find(obj => obj.memberId===recieverId) ;
+                if (prevChat){
+                    const chatMessages = await getChatById(prevChat.chatId);
+                    const chatMessageArr = chatMessages.chats.messages ;
+                    const formatMessage = chatMessageArr.map(elem => ({
+                        message: elem.message,
+                        senderId: elem.userId
+                    }))
+                    // console.log("chatMessage\n",formatMessage) ;
+                    setChats(formatMessage) ;
+                }
             }
         }
         getUserDetails();
@@ -75,9 +87,11 @@ const Chat = () => {
         e.preventDefault() ;
         // const recieverID = e.target.recId.value ;
         const msg = e.target.msg.value ;
+        e.target.msg.value = '';
         console.log(recieverId,msg,user._id) ;
         socket.emit('new-chat',({recID: recieverId, sender: user._id, msg: msg})) ;
         setChats(prev => ([...prev,{message: msg, senderId: user._id}])) ;
+        sendChatToDb({ senderId: user._id, receiverId: recieverId, senderName: user.name, receiverName: recieverName, message: msg}) ;
     }
 
     return (
@@ -108,7 +122,7 @@ const Chat = () => {
                         <form onSubmit={sendMessage}  className="pt-1 flex flex-row">
                             {/* <Input placeholder="Type your message...." required={true} value={message} onChange={(e) => setMessage(e.target.value)} className="w-full px-2 pr-12 -mr-16" /> */}
                             {/* <Button endIcon={<SendIcon />} type="button" disabled={!message} onClick={sendMessage} /> */}
-                            <input type="text" placeholder="Send message..." name="msg" className="w-full p-2 mr-2"/>
+                            <input type="text" placeholder="Send message..." name="msg" className="w-full p-2 mr-2 border"/>
                             <button type="submit" className=""><SendIcon /></button>
                         </form>
                     </div>

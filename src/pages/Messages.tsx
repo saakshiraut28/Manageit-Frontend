@@ -14,7 +14,6 @@ const Messages = () => {
     const navigate = useNavigate();
     // (Used Just for demonstration)
     // Fetch messages from user array and show that instead of this
-    const [messages, setMessages] = useState(false);
     const [members, setMembers] = useState<userType[]>();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const [alertState, setalertState] = useRecoilState(alertAtom);
@@ -36,7 +35,7 @@ const Messages = () => {
             const res = await makeRequest("/user", "GET");
             if (res.data.user) {
                 setUser(res.data.user)
-                console.log("User updated!");
+                console.log("User updated!\n",res.data.user);
             }
             else navigate("/")
         }
@@ -77,41 +76,20 @@ const Messages = () => {
                     <Divider />
                     {/* Message Container */}
                     <div className="flex flex-col">
-                        {messages ? (
+                        {user.chatTo.length > 0 ? (
                             <>
-                                {/* Message label */}
-                                <div>
-                                    <Link
-                                        to={"/chat/chatId"}
-                                        className="hover:bg-gray-200 flex gap-2 px-4 py-4 justify-between items-center transition-all"
-                                    >
-                                        <h1>Saakshi Raut</h1>
-                                        <span className="text-gray-600 text-sm">3 mins ago</span>
-                                    </Link>
-                                    <Divider />
-                                </div>
-                                {/* Message label */}
-                                <div>
-                                    <Link
-                                        to={"/chat/chatId"}
-                                        className="hover:bg-gray-200 flex gap-2 px-4 py-4 justify-between items-center transition-all"
-                                    >
-                                        <h1>Mayank Bansal</h1>
-                                        <span className="text-gray-600 text-sm">23 hours ago</span>
-                                    </Link>
-                                    <Divider />
-                                </div>
-                                {/* Message label */}
-                                <div>
-                                    <Link
-                                        to={"/chat"}
-                                        className="hover:bg-gray-200 flex gap-2 px-4 py-4 justify-between items-center transition-all"
-                                    >
-                                        <h1>Arghya Das</h1>
-                                        <span className="text-gray-600 text-sm">13 days ago</span>
-                                    </Link>
-                                    <Divider />
-                                </div>
+                                {user.chatTo.map((elem,ind) => (
+                                    // <p key={ind}>{elem.name}</p>
+                                    <div key={ind} className="py-1">
+                                        <Link
+                                            to={`/chat/${elem.name}/${elem.memberId}`}
+                                            className="hover:bg-gray-200 flex gap-2 px-4 py-6 justify-between items-center transition-all"
+                                        >
+                                            <h1 className="font-bold text-lg">{elem.name}</h1>
+                                        </Link>
+                                        <Divider />
+                                    </div>
+                                ))}
                             </>
                         ) : (
                             <p className="flex justify-center items-center h-[65vh]"> No messages to show in the inbox. Start a new chat with other members of the organisation</p>

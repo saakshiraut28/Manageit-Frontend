@@ -155,7 +155,7 @@ const ProjectDash = () => {
                                 horizontal: 'center',
                             }}
                         >
-                            <Lists members={project?.users} showDelete={true} admin={user.role === "admin"} userId={user._id} />
+                            <Lists members={project?.users} showDelete={true} admin={user.role !== "user"} userId={user._id} />
                         </Popover>
                     </div>
                 </div>

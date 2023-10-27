@@ -35,10 +35,16 @@ export default function ProjectModal() {
   const [alertState, setalertState] = useRecoilState(alertAtom);
 
   const createProject = async () => {
+    let orgId;
+    if (user.role === "owner") {
+      orgId = user._id
+    } else {
+      orgId = user.orgId
+    }
     const newProject = {
       name: name,
       desc: desc,
-      orgId: user.orgId,
+      orgId: orgId,
       createdBy: {
         userId: user._id,
         name: user.name

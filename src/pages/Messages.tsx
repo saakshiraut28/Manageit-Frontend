@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { alertAtom } from "../atom/global";
 import { userAtom } from "../atom/user";
 import { userType } from "../types/types"
+import OrgSidebar from "../components/OrgSidebar";
 
 const Messages = () => {
     const navigate = useNavigate();
@@ -63,7 +64,7 @@ const Messages = () => {
 
     return (
         <div className="flex flex-row">
-            <SideBar />
+            {user.role === "owner" ? <OrgSidebar /> : <SideBar />}
             {/* Message Inbox */}
             <div className="w-full px-4 mb-10 sm:px-6 lg:w-3/4">
                 {/* Header */}

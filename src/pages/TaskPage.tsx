@@ -30,7 +30,7 @@ const TaskPage = () => {
         const response = await makeRequest(`/task/${taskId}/comment`, "POST", commentBody);
         setComment("");
         if (response && response.status === 200) {
-            console.log("New Comment Response:", response.data);
+            window.location.reload();
             setalertState({ open: true, text: response.data.msg, eventType: "success" })
         } else {
             setalertState({ open: true, text: response.data.msg, eventType: "error" })
@@ -51,7 +51,6 @@ const TaskPage = () => {
             const res = await makeRequest("/user", "GET");
             if (res.data.user) {
                 setUser(res.data.user)
-                console.log("User updated!");
             }
             else navigate("/")
         }

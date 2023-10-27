@@ -28,7 +28,6 @@ const Dashboard = () => {
         navigate("/auth");
       } else {
         setUser(user);
-        console.log("Details: ", user);
       }
     }
 

@@ -25,7 +25,6 @@ const UserProfile = () => {
             const res = await makeRequest("/user", "GET");
             if (res.data.user) {
                 setUser(res.data.user)
-                console.log("User updated!");
             }
             else navigate("/")
         }
@@ -41,8 +40,7 @@ const UserProfile = () => {
                 const res = await makeRequest("/user/" + userId, "GET");
                 if (res.data.user) {
                     setUserDetail(res.data.user);
-                    setSameUser(res.data.user._id === user._id);
-                    console.log(res.data.user);
+                    setSameUser(res.data.user._id === user._id);                    
                 }
             } catch (error) {
                 setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })

@@ -30,14 +30,6 @@ const router = createBrowserRouter([
     element: <Auth />,
   },
   {
-    path: "/projectModal",
-    element: <ProjectModal />,
-  },
-  {
-    path: "/taskModal",
-    element: <TaskModal />,
-  },
-  {
     path: "/project",
     element: <ProjectList />
   },

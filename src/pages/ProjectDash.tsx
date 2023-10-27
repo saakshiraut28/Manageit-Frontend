@@ -5,7 +5,7 @@ import Groups2Icon from '@mui/icons-material/Groups2';
 import Task from "../components/Task";
 import { makeRequest } from "../utils/api";
 import { Types } from "mongoose";
-import { Skeleton, Popover, Button, List, ListItem, ListItemButton, ListItemText, Popper, Modal, Typography, Box } from "@mui/material";
+import { Skeleton, Popover, Button, List, ListItem, ListItemButton, ListItemText, Modal, Tooltip } from "@mui/material";
 import Lists from "../components/Lists";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
@@ -88,7 +88,6 @@ const ProjectDash = () => {
                 const filteredUsers = users.filter(user => {
                     return !project.users.some(projectUser => projectUser.userId === user.userId);
                 });
-                console.log("Filtered Users: ", filteredUsers);
                 if (filteredUsers) {
                     setAddUsers(filteredUsers);
                 }
@@ -110,7 +109,7 @@ const ProjectDash = () => {
                     {/* Members Popover */}
                     <div className="flex flex-wrap">
                         <div className="relative">
-                            {user.role !== "user" && <Button variant="text" onClick={handleOpenModal} className="flex items-center gap-2 text-blue-500"><span className="hidden sm:block">Add User</span><PersonAddIcon /></Button>}
+                            {user.role !== "user" && <Tooltip title="Add a new user to project"><Button variant="text" onClick={handleOpenModal} className="flex items-center gap-2 text-blue-500"><span className="hidden sm:block">Add User</span><PersonAddIcon /></Button></Tooltip>}
                             <Modal
                                 open={openModal}
                                 onClose={handleCloseModal}
@@ -136,9 +135,11 @@ const ProjectDash = () => {
                                 </div>
                             </Modal>
                         </div>
-                        <Button aria-describedby={id} onClick={handleClick}>
-                            <div className="flex items-center gap-2 text-blue-500"><span className="hidden md:text-md sm:block">Members</span><Groups2Icon /></div>
-                        </Button>
+                        <Tooltip title="Members who are part of the project">
+                            <Button aria-describedby={id} onClick={handleClick}>
+                                <div className="flex items-center gap-2 text-blue-500"><span className="hidden md:text-md sm:block">Members</span><Groups2Icon /></div>
+                            </Button>
+                        </Tooltip>
                         <Popover
                             id={id}
                             open={open}

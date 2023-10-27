@@ -1,7 +1,7 @@
 /** @format */
 
 import { useEffect, useState } from "react";
-import { Box, Modal, Button, Select, SelectChangeEvent, FormControl, InputLabel, OutlinedInput, Chip, MenuItem } from "@mui/material";
+import { Box, Modal, Button, Select, SelectChangeEvent, FormControl, InputLabel, OutlinedInput, Chip, MenuItem, Tooltip } from "@mui/material";
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -68,7 +68,6 @@ export default function TaskModal() {
       try {
         const res = await makeRequest("/project/" + projectId + "/users", "GET");
         if (res.data?.users) {
-          console.log(res.data.users);
           setUsers(res.data.users)
         }
       } catch (error) {
@@ -117,7 +116,9 @@ export default function TaskModal() {
 
   return (
     <>
-      <Button onClick={handleOpen}>Create Task</Button>
+      <Tooltip title="Create a new task in the project">
+        <Button onClick={handleOpen}>Create Task</Button>
+      </Tooltip>
       <Modal
         keepMounted
         open={open}
@@ -193,7 +194,7 @@ export default function TaskModal() {
               </LocalizationProvider>
             </div>
             <div className="flex justify-center mt-4">
-              <Button variant="contained" color="secondary" onClick={addTask}>Add Task</Button>
+              {name && desc && <Button variant="contained" color="secondary" onClick={addTask}>Add Task</Button>}
             </div>
           </form>
         </Box>

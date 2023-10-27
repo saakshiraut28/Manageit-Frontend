@@ -1,15 +1,12 @@
 /** @format */
 
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
-import { useRecoilState } from "recoil";
-import { userAtom } from "../atom/user";
+import { useParams } from "react-router-dom";
+import { Box, Modal, Button, Tooltip } from "@mui/material";
 import { IProject } from "../types/types";
 import { makeRequest } from "../utils/api";
 import EditIcon from "@mui/icons-material/Edit";
-import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { alertAtom } from "../atom/global";
 
 const style = {
@@ -37,7 +34,6 @@ export default function EditProjectModal({ project }: EditProjectModalProps) {
 
     const [title, setTitle] = useState(project?.name);
     const [desc, setDesc] = useState(project?.desc);
-    const [user, setUser] = useRecoilState(userAtom);
     const [alertState, setalertState] = useRecoilState(alertAtom);
     const { projectId } = useParams();
 
@@ -60,7 +56,9 @@ export default function EditProjectModal({ project }: EditProjectModalProps) {
 
     return (
         <>
-            <Button onClick={handleOpen}><EditIcon />Edit</Button>
+            <Tooltip title="Edit the project details">
+                <Button onClick={handleOpen}><EditIcon />Edit</Button>
+            </Tooltip>
             <Modal
                 keepMounted
                 open={open}

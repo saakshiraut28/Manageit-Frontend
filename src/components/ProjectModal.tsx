@@ -1,9 +1,7 @@
 /** @format */
 
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
+import { Box, Modal, Button, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useRecoilState } from "recoil";
 import { userAtom } from "../atom/user";
@@ -31,14 +29,14 @@ export default function ProjectModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const [user, setUser] = useRecoilState(userAtom);
+  const [user] = useRecoilState(userAtom);
   const [alertState, setalertState] = useRecoilState(alertAtom);
 
   const createProject = async () => {
     const newProject = {
-      name: title,
+      name: name,
       desc: desc,
       orgId: user.orgId,
       createdBy: {
@@ -60,7 +58,9 @@ export default function ProjectModal() {
 
   return (
     <>
-      <Button onClick={handleOpen}>Create New Project <AddIcon /></Button>
+      <Tooltip title="Create a new project">
+        <Button onClick={handleOpen}>Create New Project <AddIcon /></Button>
+      </Tooltip>
       <Modal
         keepMounted
         open={open}
@@ -79,8 +79,8 @@ export default function ProjectModal() {
                   className="title bg-gray-200 outline-none w-full h-10 p-1 pl-4 text-sm hover:font-medium"
                   placeholder="Project Title"
                   type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="bg-black hover:bg-gradient-to-r hover:from-[#FF7B7B]  hover:to-[#F14DFF] mb-4 pb-[2px]">
@@ -92,7 +92,7 @@ export default function ProjectModal() {
                 />
               </div>
               <div className="flex justify-center">
-                <Button variant="contained" color="secondary" onClick={createProject}>Create Project</Button>
+                {name && desc && <Button variant="contained" color="secondary" onClick={createProject}>Create Project</Button>}
               </div>
             </div>
           </form>

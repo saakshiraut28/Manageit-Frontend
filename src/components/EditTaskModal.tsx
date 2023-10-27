@@ -1,18 +1,17 @@
 /** @format */
 
 import { useEffect, useState } from "react";
-import { Box, Modal, Button, Select, SelectChangeEvent, FormControl, InputLabel, OutlinedInput, Chip, MenuItem } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { Box, Modal, Button, Select, SelectChangeEvent, FormControl, InputLabel, OutlinedInput, Chip, MenuItem, Tooltip } from "@mui/material";
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { ITask, userType } from "../types/types";
 import { makeRequest } from "../utils/api";
 import { useRecoilState } from "recoil";
 import { alertAtom } from "../atom/global";
-import { userAtom } from "../atom/user";
 import EditIcon from "@mui/icons-material/Edit";
 
 const style = {
@@ -44,7 +43,6 @@ interface EditTaskModalProps {
     task: ITask;
 }
 
-
 export default function EditTaskModal({ task }: EditTaskModalProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -57,8 +55,6 @@ export default function EditTaskModal({ task }: EditTaskModalProps) {
     const [desc, setDesc] = useState<string>(task?.desc);
     const [deadline, setDeadline] = useState<Dayjs | null>(task?.deadline ? dayjs(task.deadline) : null);
     const [alertState, setalertState] = useRecoilState(alertAtom);
-    const [user, setUser] = useRecoilState(userAtom);
-    const navigate = useNavigate();
 
     const handleChange = (event: SelectChangeEvent<typeof personName>) => {
         const {
@@ -86,7 +82,6 @@ export default function EditTaskModal({ task }: EditTaskModalProps) {
             try {
                 const res = await makeRequest("/project/" + task.projectId + "/users", "GET");
                 if (res.data?.users) {
-                    console.log(res.data.users);
                     setUsers(res.data.users)
                 }
             } catch (error) {
@@ -127,7 +122,9 @@ export default function EditTaskModal({ task }: EditTaskModalProps) {
 
     return (
         <>
-            <Button onClick={handleOpen}><EditIcon />Edit</Button>
+            <Tooltip title="Edit the task">
+                <Button onClick={handleOpen}><EditIcon />Edit</Button>
+            </Tooltip>
             <Modal
                 keepMounted
                 open={open}

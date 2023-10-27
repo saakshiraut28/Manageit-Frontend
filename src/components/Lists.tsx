@@ -25,7 +25,6 @@ const Lists: React.FC<ListsProps> = ({ members, showDelete = false, admin = fals
                 setalertState({ open: true, text: "User Deleted Successfully!", eventType: "success" });
                 window.location.reload();
             }
-            console.log(res.data);
         } catch (error) {
             setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "error" });
         }

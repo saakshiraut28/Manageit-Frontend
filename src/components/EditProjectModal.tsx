@@ -90,7 +90,7 @@ export default function EditProjectModal({ project }: EditProjectModalProps) {
                                 />
                             </div>
                             <div className="flex justify-center">
-                                <Button variant="contained" color="secondary" onClick={updateProject}>Create Project</Button>
+                                <Button variant="contained" color="secondary" onClick={updateProject}>Update Project</Button>
                             </div>
                         </div>
                     </form>

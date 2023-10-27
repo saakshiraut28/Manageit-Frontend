@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { getUserData } from "../services/user"
-import DashTask from '../components/DashTask';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AlarmOnIcon from '@mui/icons-material/AlarmOn';
 import SideBar from '../components/SideBar';

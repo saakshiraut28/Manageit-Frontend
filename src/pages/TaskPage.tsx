@@ -12,6 +12,7 @@ import { alertAtom } from "../atom/global";
 import SideBar from "../components/SideBar";
 import { userAtom } from '../atom/user';
 import EditTaskModal from "../components/EditTaskModal";
+import TaskStatus from "../components/TaskStatus";
 
 const TaskPage = () => {
     const [comment, setComment] = useState("");
@@ -88,8 +89,8 @@ const TaskPage = () => {
                         <div className="my-3">
                             <h1 className="text-4xl font-bold mb-2"> {task.name} <span className="block sm:inline">
                                 <Chip variant="outlined" size="small" color="primary" label={"Assigned By: @" + task.assignedBy.name} className="m-2" />
-                                <Chip size="small" color="warning" variant="outlined" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} className="m-2" />
-                                <Chip size="small" color={task.status === "completed" ? "success" : "info"} label={task.status || "No status"} className="m-2" />
+                                <Chip size="small" color={task.deadline ? "error" : "warning"} variant="outlined" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} className="m-2" />
+                                <TaskStatus taskStatus={task.status || "No Status"} userRole={user.role} />
                             </span>
                             </h1>
                             <Stack>

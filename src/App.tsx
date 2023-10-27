@@ -11,6 +11,7 @@ import Messages from "./pages/Messages";
 import ProjectList from "./pages/ProjectList";
 import Calendar from "./pages/Calendar";
 import OrgDashboard from "./pages/OrgDashboard";
+import OrgUser from "./pages/OrgUser";
 
 //      Components
 import Demo from "./components/Demo"
@@ -18,7 +19,6 @@ import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
 import TaskCard from "./components/TaskCard";
 import Chat from "./components/Chat";
-import OrgUser from "./pages/orgUser";
 
 const router = createBrowserRouter([
   {

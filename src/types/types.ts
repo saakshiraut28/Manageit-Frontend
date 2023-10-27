@@ -56,7 +56,9 @@ export interface commentType extends Document {
 
 export interface chatToType {
     chatId: string,
-    chatName: string
+    memberId: string,
+    name: string,
+    lastVis: Date,
 }
 
 
@@ -106,3 +108,15 @@ export interface IOrganisation extends Document {
     projects?: projectType[],
     users?: userType[]
 }
+
+
+// Interface for chatSendInput
+
+export interface sendChatIp {
+    senderId: Types.ObjectId | string;
+    receiverId: Types.ObjectId | string;
+    senderName: string;
+    receiverName: string;
+    message: string;
+}
+  

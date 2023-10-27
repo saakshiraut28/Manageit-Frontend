@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { userAtom } from '../atom/user';
 import { makeRequest } from '../utils/api';
 import ProjectModal from '../components/ProjectModal';
+import OrgSidebar from '../components/OrgSidebar';
 
 const ProjectList = () => {
     const navigate = useNavigate();
@@ -27,7 +28,7 @@ const ProjectList = () => {
     return (
         <>
             <div className="container flex flex-row px-3 sm:px-5">
-                <SideBar />
+                {user.role === "owner" ? <OrgSidebar /> : <SideBar />}
                 <div className="lg:px-10 w-screen lg:w-4/5 flex gap-2 flex-col">
                     <h1 className="text-2xl py-5 font-semibold flex flex-col">Project Lists</h1>
                     {user.role !== "user" && <div className="p-3"><ProjectModal /></div>}

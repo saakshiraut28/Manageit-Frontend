@@ -41,7 +41,7 @@ const DashTask: React.FC<Props> = ({ taskId }) => {
                         to={"/task/" + taskId}
                         className="border-2 rounded-lg flex flex-col gap-3 px-4 py-6 bg-white"
                     >
-                        <h1 className="text-lg md:text-xl font-semibold">{task.name}</h1>
+                        <h1 className="text-lg md:text-xl font-semibold">{task.name.length > 50 ? `${task.name.slice(0, 50)}...` : task.name}</h1>
                         <div>{task.desc.length > 100 ? `${task.desc.slice(0, 100)}...` : task.desc}</div>
                         <Stack direction="row" spacing={1} className="mt-2 flex flex-wrap gap-2">
                             <Chip color="primary" label={task.assignedBy ? "Assigned By: @" + task.assignedBy.name : "No Assignee"} />

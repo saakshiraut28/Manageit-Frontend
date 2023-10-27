@@ -10,6 +10,7 @@ import { Types } from "mongoose";
 import { makeRequest } from "../utils/api";
 import { IUser } from "../types/types";
 import SmsRoundedIcon from '@mui/icons-material/SmsRounded';
+import OrgSidebar from "../components/OrgSidebar";
 
 const UserProfile = () => {
     const { userId } = useParams();
@@ -40,7 +41,7 @@ const UserProfile = () => {
                 const res = await makeRequest("/user/" + userId, "GET");
                 if (res.data.user) {
                     setUserDetail(res.data.user);
-                    setSameUser(res.data.user._id === user._id);                    
+                    setSameUser(res.data.user._id === user._id);
                 }
             } catch (error) {
                 setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
@@ -51,7 +52,7 @@ const UserProfile = () => {
 
     return (
         <div className="flex flex-row">
-            <SideBar />
+            {user.role === "owner" ? <OrgSidebar /> : <SideBar />}
             {/* TaskPage */}
             <div className="w-full px-4 mb-10 lg:mb-2 sm:px-6 lg:w-3/4">
                 {/* Header */}

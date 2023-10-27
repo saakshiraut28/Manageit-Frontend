@@ -13,6 +13,7 @@ import SideBar from "../components/SideBar";
 import { userAtom } from '../atom/user';
 import EditTaskModal from "../components/EditTaskModal";
 import TaskStatus from "../components/TaskStatus";
+import OrgSidebar from "../components/OrgSidebar";
 
 const TaskPage = () => {
     const [comment, setComment] = useState("");
@@ -75,7 +76,7 @@ const TaskPage = () => {
 
     return (
         <div className="flex flex-row">
-            <SideBar />
+            {user.role === "owner" ? <OrgSidebar /> : <SideBar />}
             {/* TaskPage */}
             <div className="w-full px-4 mb-10 lg:mb-2 sm:px-6 lg:w-3/4">
                 {/* Header */}

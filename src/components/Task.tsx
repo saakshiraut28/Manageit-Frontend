@@ -37,7 +37,7 @@ const Task: React.FC<TaskProps> = ({ taskId, projectId }) => {
                     to={"/task/" + taskId}
                     className={`border-2 rounded-lg flex flex-col items-start gap-2 px-4 py-6 md:flex-row md:justify-between md:items-center ${task.status === "Completed" ? "bg-gray-200" : "bg-white"}`}
                 >
-                    <h1>{task.name}</h1>
+                    <h1>{task.name.length > 50 ? `${task.name.slice(0, 50)}...` : task.name}</h1>
                     <Stack direction="row" spacing={1} className="flex flex-wrap gap-2">
                         <Chip variant="outlined" size="small" color="primary" label={task.assignedBy ? "Assigned By: @" + task.assignedBy.name : "No Assignee"} />
                         <Chip size="small" color="warning" variant="outlined" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} />

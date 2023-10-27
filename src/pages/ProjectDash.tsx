@@ -14,6 +14,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { userAtom } from '../atom/user';
 import TaskModal from "../components/TaskModal";
 import EditProjectModal from "../components/EditProjectModal";
+import OrgSidebar from "../components/OrgSidebar";
 
 const ProjectDash = () => {
     const [project, setProject] = useState<IProject>();
@@ -101,7 +102,7 @@ const ProjectDash = () => {
 
     return (
         <div className="flex flex-row">
-            <SideBar />
+            {user.role === "owner" ? <OrgSidebar /> : <SideBar />}
             <div className="w-full px-4 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 items-center justify-between">

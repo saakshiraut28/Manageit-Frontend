@@ -10,15 +10,15 @@ import UserProfile from "./pages/UserProfile";
 import Messages from "./pages/Messages";
 import ProjectList from "./pages/ProjectList";
 import Calendar from "./pages/Calendar";
+import OrgDashboard from "./pages/OrgDashboard";
 
 //      Components
 import Demo from "./components/Demo"
 import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
-import ProjectModal from "./components/ProjectModal";
-import TaskModal from "./components/TaskModal";
 import TaskCard from "./components/TaskCard";
 import Chat from "./components/Chat";
+import OrgUser from "./pages/orgUser";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +64,14 @@ const router = createBrowserRouter([
   {
     path: "/chat/:name/:userId",
     element: <Chat />
+  },
+  {
+    path: "/org",
+    element: <OrgDashboard />
+  },
+  {
+    path: "/orgUser",
+    element: <OrgUser />
   }
 ]);
 

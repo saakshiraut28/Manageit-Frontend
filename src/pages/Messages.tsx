@@ -48,16 +48,18 @@ const Messages = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const res = await makeRequest("/org/" + user.orgId + "/users", "GET");
+                const res = await makeRequest(`/org/${user.orgId}/users`, "GET");
                 if (res.data?.users) {
-                    setMembers(res.data.users);
+                    const filteredUsers = res.data.users.filter((member) => member.userId !== user._id);
+                    setMembers(filteredUsers);
                 }
             } catch (error) {
-                setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
+                setalertState({ open: true, text: "Some Error occurred. Try again!", eventType: "warning" });
             }
-        }
+        };
         fetchUsers();
-    }, [user])
+    }, [user]);
+
 
     return (
         <div className="flex flex-row">
@@ -73,17 +75,17 @@ const Messages = () => {
                     <h1 className="text-2xl font-semibold ml-2 py-2 pb-6">Message Inbox</h1>
                     <Divider />
                     {/* Message Container */}
-                    <div className="flex flex-col">
+                    <div className="flex flex-col h-[65vh] overflow-y-scroll">
                         {user.chatTo.length > 0 ? (
                             <>
-                                {user.chatTo.map((elem,ind) => (
+                                {user.chatTo.map((elem, ind) => (
                                     // <p key={ind}>{elem.name}</p>
                                     <div key={ind} className="py-1">
                                         <Link
                                             to={`/chat/${elem.name}/${elem.memberId}`}
                                             className="hover:bg-gray-200 flex gap-2 px-4 py-6 justify-between items-center transition-all"
                                         >
-                                            <h1 className="font-bold text-lg">{elem.name}</h1>
+                                            <h1 className="font-semibold text-lg">{elem.name}</h1>
                                         </Link>
                                         <Divider />
                                     </div>

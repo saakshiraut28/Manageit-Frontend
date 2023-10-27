@@ -45,8 +45,8 @@ const DashTask: React.FC<Props> = ({ taskId }) => {
                         <div>{task.desc.length > 100 ? `${task.desc.slice(0, 100)}...` : task.desc}</div>
                         <Stack direction="row" spacing={1} className="mt-2 flex flex-wrap gap-2">
                             <Chip color="primary" label={task.assignedBy ? "Assigned By: @" + task.assignedBy.name : "No Assignee"} />
-                            <Chip color="warning" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} />
-                            <Chip color="success" label={task.status || "No status"} />
+                            <Chip color="error" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} />
+                            <Chip color={task.status === "Completed" ? "success" : "info"} label={task.status || "No status"} className="m-2" />
                         </Stack>
                     </Link >
                 ) : (

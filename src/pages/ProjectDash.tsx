@@ -10,10 +10,10 @@ import Lists from "../components/Lists";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
 import SideBar from "../components/SideBar";
-import EditIcon from "@mui/icons-material/Edit";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { userAtom } from '../atom/user';
 import TaskModal from "../components/TaskModal";
+import EditProjectModal from "../components/EditProjectModal";
 
 const ProjectDash = () => {
     const [project, setProject] = useState<IProject>();
@@ -57,7 +57,6 @@ const ProjectDash = () => {
             const res = await makeRequest("/user", "GET");
             if (res.data.user) {
                 setUser(res.data.user)
-                console.log("User updated!");
             }
             else navigate("/")
         }
@@ -163,7 +162,7 @@ const ProjectDash = () => {
                     <div className="flex flex-col gap-4">
                         <div className="my-3 flex justify-between">
                             <h1 className="text-4xl font-bold"> {project.name} <span className="block mt-2 text-sm font-thin sm:inline"> Created By: @<Link to={"/user/" + project.createdBy.userId}>{project.createdBy.name}</Link> </span></h1>
-                            {user.role !== "user" && <button className="text-md flex items-center"><EditIcon /> Edit</button>}
+                            {user.role !== "user" && <EditProjectModal project={project} />}
                         </div>
                         <div>
                             <span className="font-semibold">Description: </span>

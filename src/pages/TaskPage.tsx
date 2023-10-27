@@ -10,8 +10,8 @@ import { formatDate } from "../utils/formatDate";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
 import SideBar from "../components/SideBar";
-import EditIcon from '@mui/icons-material/Edit';
 import { userAtom } from '../atom/user';
+import EditTaskModal from "../components/EditTaskModal";
 
 const TaskPage = () => {
     const [comment, setComment] = useState("");
@@ -81,7 +81,7 @@ const TaskPage = () => {
                 {/* Header */}
                 <div className="flex h-14 justify-between items-center">
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
-                    {user.role !== "user" && <button className="text-md flex items-center"><EditIcon /> Edit</button>}
+                    {user.role !== "user" && <EditTaskModal task={task} />}
                 </div>
                 {/* Task Details */}
                 {task ? (

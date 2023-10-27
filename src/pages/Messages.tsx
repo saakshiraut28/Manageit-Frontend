@@ -36,7 +36,6 @@ const Messages = () => {
             const res = await makeRequest("/user", "GET");
             if (res.data.user) {
                 setUser(res.data.user)
-                console.log("User updated!");
             }
             else navigate("/")
         }
@@ -52,7 +51,6 @@ const Messages = () => {
             try {
                 const res = await makeRequest("/org/" + user.orgId + "/users", "GET");
                 if (res.data?.users) {
-                    console.log(res.data);
                     setMembers(res.data.users);
                 }
             } catch (error) {

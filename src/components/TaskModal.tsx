@@ -102,7 +102,7 @@ export default function TaskModal() {
           userId: user._id
         },
       }
-      console.log(newTask);
+
       try {
         const res = await makeRequest("/project/" + projectId + "/task", "POST", newTask)
         if (res.data) {

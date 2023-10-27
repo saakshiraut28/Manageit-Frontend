@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { userAtom } from "../atom/user";
 import { IProject } from "../types/types";
 import { makeRequest } from "../utils/api";
+import { alertAtom } from "../atom/global";
 
 const style = {
   position: "absolute" as "absolute",
@@ -33,6 +34,7 @@ export default function ProjectModal() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [user, setUser] = useRecoilState(userAtom);
+  const [alertState, setalertState] = useRecoilState(alertAtom);
 
   const createProject = async () => {
     const newProject = {
@@ -47,9 +49,12 @@ export default function ProjectModal() {
     }
     try {
       const res = await makeRequest("/project", "POST", newProject);
-      console.log(res.data);
+      if (res.data) {
+        setalertState({ open: true, text: "Project created! Successfully!", eventType: "success" });
+        window.location.reload();
+      }
     } catch (error) {
-      console.log(error)
+      setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "error" });
     }
   }
 

@@ -7,12 +7,13 @@ import Comment from "../components/Comment";
 import { makeRequest } from "../utils/api";
 import { ITask, commentType, userType } from "../types/types";
 import { formatDate } from "../utils/formatDate";
-import { Types } from "mongoose";
 import { useRecoilState } from 'recoil';
 import { alertAtom } from "../atom/global";
 import SideBar from "../components/SideBar";
-import EditIcon from '@mui/icons-material/Edit';
 import { userAtom } from '../atom/user';
+import EditTaskModal from "../components/EditTaskModal";
+import TaskStatus from "../components/TaskStatus";
+import OrgSidebar from "../components/OrgSidebar";
 
 const TaskPage = () => {
     const [comment, setComment] = useState("");
@@ -31,7 +32,7 @@ const TaskPage = () => {
         const response = await makeRequest(`/task/${taskId}/comment`, "POST", commentBody);
         setComment("");
         if (response && response.status === 200) {
-            console.log("New Comment Response:", response.data);
+            window.location.reload();
             setalertState({ open: true, text: response.data.msg, eventType: "success" })
         } else {
             setalertState({ open: true, text: response.data.msg, eventType: "error" })
@@ -52,7 +53,6 @@ const TaskPage = () => {
             const res = await makeRequest("/user", "GET");
             if (res.data.user) {
                 setUser(res.data.user)
-                console.log("User updated!");
             }
             else navigate("/")
         }
@@ -76,13 +76,13 @@ const TaskPage = () => {
 
     return (
         <div className="flex flex-row">
-            <SideBar />
+            {user.role === "owner" ? <OrgSidebar /> : <SideBar />}
             {/* TaskPage */}
             <div className="w-full px-4 mb-10 lg:mb-2 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 justify-between items-center">
                     <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
-                    {user.role !== "user" && <button className="text-md flex items-center"><EditIcon /> Edit</button>}
+                    {user.role !== "user" && <EditTaskModal task={task} />}
                 </div>
                 {/* Task Details */}
                 {task ? (
@@ -90,8 +90,8 @@ const TaskPage = () => {
                         <div className="my-3">
                             <h1 className="text-4xl font-bold mb-2"> {task.name} <span className="block sm:inline">
                                 <Chip variant="outlined" size="small" color="primary" label={"Assigned By: @" + task.assignedBy.name} className="m-2" />
-                                <Chip size="small" color="warning" variant="outlined" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} className="m-2" />
-                                <Chip size="small" color={task.status === "completed" ? "success" : "info"} label={task.status || "No status"} className="m-2" />
+                                <Chip size="small" color={task.deadline ? "error" : "warning"} variant="outlined" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} className="m-2" />
+                                <TaskStatus taskStatus={task.status || "No Status"} userRole={user.role} />
                             </span>
                             </h1>
                             <Stack>

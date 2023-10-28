@@ -10,13 +10,13 @@ import UserProfile from "./pages/UserProfile";
 import Messages from "./pages/Messages";
 import ProjectList from "./pages/ProjectList";
 import Calendar from "./pages/Calendar";
+import OrgDashboard from "./pages/OrgDashboard";
+import OrgUser from "./pages/OrgUser";
 
 //      Components
 import Demo from "./components/Demo"
 import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
-import ProjectModal from "./components/ProjectModal";
-import TaskModal from "./components/TaskModal";
 import TaskCard from "./components/TaskCard";
 import Chat from "./components/Chat";
 
@@ -28,14 +28,6 @@ const router = createBrowserRouter([
   {
     path: "/auth",
     element: <Auth />,
-  },
-  {
-    path: "/projectModal",
-    element: <ProjectModal />,
-  },
-  {
-    path: "/taskModal",
-    element: <TaskModal />,
   },
   {
     path: "/project",
@@ -72,6 +64,14 @@ const router = createBrowserRouter([
   {
     path: "/chat/:name/:userId",
     element: <Chat />
+  },
+  {
+    path: "/org",
+    element: <OrgDashboard />
+  },
+  {
+    path: "/orgUser",
+    element: <OrgUser />
   }
 ]);
 

@@ -1,30 +1,33 @@
-import { Typography, Toolbar, ListItem, List, Divider, Accordion, AccordionDetails, AccordionSummary, Paper, BottomNavigation, BottomNavigationAction, Tooltip, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useRecoilState } from 'recoil';
+import { userAtom } from '../atom/user';
+import { makeRequest } from '../utils/api';
+
+import { Typography, Toolbar, ListItem, List, Divider, Accordion, AccordionDetails, AccordionSummary, Paper, BottomNavigation, BottomNavigationAction, Tooltip, Button, Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Modal, Box } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import HomeIcon from '@mui/icons-material/Home';
-import { useRecoilState } from "recoil";
-import { userAtom } from "../atom/user";
-import ProjectModal from "./ProjectModal";
+import ProjectModal from "../components/ProjectModal";
 import LogoutIcon from '@mui/icons-material/Logout';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import GroupIcon from '@mui/icons-material/Group';
+import InfoIcon from '@mui/icons-material/Info';
+import AddIcon from '@mui/icons-material/Add';
+import HomeIcon from '@mui/icons-material/Home';
 
-const SideBar = () => {
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [day, setDay] = useState('');
-    const [month, setMonth] = useState('');
-    const [dayOfWeek, setDayOfWeek] = useState('');
-    const [value, setValue] = useState(0);
 
+const OrgSidebar = () => {
     const navigate = useNavigate();
+    const [user, setUser] = useRecoilState(userAtom);
+    const [value, setValue] = useState(0);
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [user, setUser] = useRecoilState(userAtom);
 
     const [openDialog, setOpenDialog] = useState(false);
 
@@ -42,14 +45,17 @@ const SideBar = () => {
         innerHeight: '20px',
     };
 
-    useEffect(() => {
-        // For the date in the sidebar
-        const date = new Date();
-        setCurrentDate(date);
-        setDay(date.getDate().toString());
-        setMonth(date.toLocaleString('default', { month: 'long' }));
-        setDayOfWeek(date.toLocaleString('default', { weekday: 'long' }));
-    }, []);
+    const projectStyle = {
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        height: 600,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -70,10 +76,10 @@ const SideBar = () => {
                     </ListItem>
                     <Divider />
 
-                    <Tooltip title="Home">
-                        <Link to="/">
+                    <Tooltip title="User Analytics">
+                        <Link to="/org">
                             <ListItem className="my-3">
-                                <div className="flex "><HomeIcon color="action" /><span className="pl-4 font-bold"> Home</span></div>
+                                <div className="flex "><EqualizerIcon color="action" /><span className="pl-4 font-bold"> Analytics</span></div>
                             </ListItem>
                         </Link>
                     </Tooltip>
@@ -90,7 +96,9 @@ const SideBar = () => {
                                 <div className="flex my-3"><CollectionsBookmarkIcon color="action" /><span className="pl-3 font-bold"> Projects</span></div>
                             </AccordionSummary>
 
-                            {user?.role !== "user" && <AccordionDetails className="accordion font-semibold flex items-center gap-1 hover:border-l-4 hover:border-blue-500 hover:bg-[#E8E8E8] transition-all"><ProjectModal /></AccordionDetails>}
+                            <AccordionDetails className="accordion font-semibold flex items-center gap-1 hover:border-l-4 hover:border-blue-500 hover:bg-[#E8E8E8] transition-all">
+                                <ProjectModal />
+                            </AccordionDetails>
 
                             {user?.projects?.map((project, i) => (
                                 <Link key={i} to={"/project/" + project?.projectId}>
@@ -101,36 +109,47 @@ const SideBar = () => {
                     </Tooltip>
                     <Divider />
 
-                    {/* Calendar */}
-                    <Tooltip title="Check your deadlines">
-                        <Link to="/calendar">
-                            <ListItem>
-                                <div className="py-1">
-                                    <span className="font-semibold text-xl">
-                                        {month}
-                                    </span>
-                                    <br />
-                                    <span >
-                                        <span className="font-bold text-2xl text-gray-700">
-                                            {day}
-                                        </span>
-                                        <span className="font-semibold text-lg px-1">
-                                            {dayOfWeek}
-                                        </span>
-                                    </span>
-                                    <div className="text-sm ml-5 mt-2">Check Your Deadlines</div>
-                                </div>
+                    {/* Chat  */}
+                    <Tooltip title="Invite new member to the organisation">
+                        <Link to="/orgUser">
+                            <ListItem className="my-3">
+                                <div className="flex "><GroupIcon color="action" /><span className="pl-4 font-bold"> Users</span></div>
                             </ListItem>
                         </Link>
                     </Tooltip>
                     <Divider />
-                    {/* Chat  */}
-                    <Tooltip title="Chats">
-                        <Link to="/messages">
-                            <ListItem className="my-3">
-                                <div className="flex "><MarkChatUnreadIcon color="action" /><span className="pl-4 font-bold"> Chats</span></div>
-                            </ListItem>
-                        </Link>
+
+                    <Tooltip title="See how PushNote works!">
+                        <ListItem className="my-3">
+                            <>
+                                <button type="button" className="flex" onClick={handleOpen}><InfoIcon color="action" /><span className="pl-4 font-bold"> Info</span></button>
+                                <Modal
+                                    open={open}
+                                    onClose={handleClose}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                >
+                                    <Box sx={projectStyle} className="overflow-y-scroll w-[95vw] md:w-[80vw]">
+                                        <Typography id="modal-modal-title" variant="h5" component="h2">
+                                            Check how PushNote Works.
+                                        </Typography>
+                                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                            1. You setup your organisation account on the app. <br />
+                                            2. You invite members to the organisation through their emails <br />
+                                            3. You assign admin role to moderators/members for handling out projects and tasks. <br />
+                                            4. Organisation Account is mainly for inviting members and keeping a eye on the project and users instead of managing them. For carrying out that function, make a admin account for interacting with workers in more efficient way. <br />
+                                            5. There are mainly projects in the organisation. Tasks can be created inside each project. Project have members but not everyone has access to that project. Only the ones added in the project can see the project and assigned tasks. <br />
+                                            6. Admins can create projects and tasks and assign them to members. But can't add new members to the organisation. <br />
+                                            7. Under each task there is one status button which can be changed to stay updated. User can mark each task for review but only admin will be able to mark it completed. <br />
+                                            8. Users who are part of the project can comment and discuss their thoughts under each task. <br />
+                                            9. Users who are part of the organisation will be able to direct message each other through messages section. <br />
+                                            10. So in short, through PushNote you can manage your tasks and workers effectively. Just setup organisation account and invite admins and users to the organisation and let admins do their work. <br />
+                                            (Note:- More Features for organisation dashboard to be launched soon)
+                                        </Typography>
+                                    </Box>
+                                </Modal>
+                            </>
+                        </ListItem>
                     </Tooltip>
                     <Divider />
 
@@ -179,16 +198,16 @@ const SideBar = () => {
                         }}
                     >
                         <Tooltip title="Home">
-                            <BottomNavigationAction href="/" label="Home" icon={<HomeIcon />} />
+                            <BottomNavigationAction href="/" label="Analytics" icon={<EqualizerIcon />} />
                         </Tooltip>
                         <Tooltip title="Projects">
                             <BottomNavigationAction href="/project" label="Projects" icon={<CollectionsBookmarkIcon />} />
                         </Tooltip>
-                        <Tooltip title="Check your deadlines">
-                            <BottomNavigationAction href="/calendar" label="Calendar" icon={<CalendarMonthIcon />} />
+                        <Tooltip title="Invite new users">
+                            <BottomNavigationAction href="/orgUser" label="Users" icon={<GroupIcon />} />
                         </Tooltip>
-                        <Tooltip title="Chats">
-                            <BottomNavigationAction href="/messages" label="Messages" icon={<MarkChatUnreadIcon />} />
+                        <Tooltip title="See how the app works!">
+                            <BottomNavigationAction onClick={handleOpen} label="Info" icon={<InfoIcon />} />
                         </Tooltip>
                         <Tooltip title="Logout">
                             <BottomNavigationAction label="Logout" onClick={handleDialogOpen} icon={<LogoutIcon />} />
@@ -200,4 +219,4 @@ const SideBar = () => {
     )
 }
 
-export default SideBar
+export default OrgSidebar;

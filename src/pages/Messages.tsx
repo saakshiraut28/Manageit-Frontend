@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { alertAtom } from "../atom/global";
 import { userAtom } from "../atom/user";
 import { userType } from "../types/types"
+import OrgSidebar from "../components/OrgSidebar";
 
 const Messages = () => {
     const navigate = useNavigate();
@@ -35,7 +36,6 @@ const Messages = () => {
             const res = await makeRequest("/user", "GET");
             if (res.data.user) {
                 setUser(res.data.user)
-                console.log("User updated!\n",res.data.user);
             }
             else navigate("/")
         }
@@ -49,21 +49,22 @@ const Messages = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const res = await makeRequest("/org/" + user.orgId + "/users", "GET");
+                const res = await makeRequest(`/org/${user.orgId}/users`, "GET");
                 if (res.data?.users) {
-                    console.log(res.data);
-                    setMembers(res.data.users);
+                    const filteredUsers = res.data.users.filter((member) => member.userId !== user._id);
+                    setMembers(filteredUsers);
                 }
             } catch (error) {
-                setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
+                setalertState({ open: true, text: "Some Error occurred. Try again!", eventType: "warning" });
             }
-        }
+        };
         fetchUsers();
-    }, [user])
+    }, [user]);
+
 
     return (
         <div className="flex flex-row">
-            <SideBar />
+            {user.role === "owner" ? <OrgSidebar /> : <SideBar />}
             {/* Message Inbox */}
             <div className="w-full px-4 mb-10 sm:px-6 lg:w-3/4">
                 {/* Header */}
@@ -75,17 +76,17 @@ const Messages = () => {
                     <h1 className="text-2xl font-semibold ml-2 py-2 pb-6">Message Inbox</h1>
                     <Divider />
                     {/* Message Container */}
-                    <div className="flex flex-col">
+                    <div className="flex flex-col h-[65vh] overflow-y-scroll">
                         {user.chatTo.length > 0 ? (
                             <>
-                                {user.chatTo.map((elem,ind) => (
+                                {user.chatTo.map((elem, ind) => (
                                     // <p key={ind}>{elem.name}</p>
                                     <div key={ind} className="py-1">
                                         <Link
                                             to={`/chat/${elem.name}/${elem.memberId}`}
                                             className="hover:bg-gray-200 flex gap-2 px-4 py-6 justify-between items-center transition-all"
                                         >
-                                            <h1 className="font-bold text-lg">{elem.name}</h1>
+                                            <h1 className="font-semibold text-lg">{elem.name}</h1>
                                         </Link>
                                         <Divider />
                                     </div>
@@ -118,7 +119,7 @@ const Messages = () => {
                     >
                         {/* Pass organisation users here! */}
                         {members ? (
-                            <Lists members={members} />
+                            <Lists members={members} showDelete={false} admin={false} userId={null} />
                         )
                             : (
                                 <p>Members of the organisation will appear here!</p>

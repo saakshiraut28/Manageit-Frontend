@@ -18,9 +18,6 @@ import Calendar from "./pages/Calendar";
 import OrgDashboard from "./pages/OrgDashboard";
 import OrgUser from "./pages/OrgUser";
 
-import TaskModal from "./components/TaskModal";
-import ProjectModal from "./components/ProjectModal";
-
 //      Components
 import Demo from "./components/Demo";
 import AlertPrompt from "./components/AlertPrompt";

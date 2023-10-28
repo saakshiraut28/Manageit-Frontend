@@ -1,4 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/**
+ * eslint-disable @typescript-eslint/no-unused-vars
+ *
+ * @format
+ */
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Pages
@@ -13,9 +18,12 @@ import Calendar from "./pages/Calendar";
 import OrgDashboard from "./pages/OrgDashboard";
 import OrgUser from "./pages/OrgUser";
 
+import TaskModal from "./components/TaskModal";
+import ProjectModal from "./components/ProjectModal";
+
 //      Components
-import Demo from "./components/Demo"
-import AlertPrompt from "./components/AlertPrompt"
+import Demo from "./components/Demo";
+import AlertPrompt from "./components/AlertPrompt";
 import Loading from "./components/Loading";
 import TaskCard from "./components/TaskCard";
 import Chat from "./components/Chat";
@@ -31,7 +39,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/project",
-    element: <ProjectList />
+    element: <ProjectList />,
   },
   {
     path: "/card",
@@ -51,28 +59,28 @@ const router = createBrowserRouter([
   },
   {
     path: "/user/:userId",
-    element: <UserProfile />
+    element: <UserProfile />,
   },
   {
     path: "/messages",
-    element: <Messages />
+    element: <Messages />,
   },
   {
     path: "/calendar",
-    element: <Calendar />
+    element: <Calendar />,
   },
   {
     path: "/chat/:name/:userId",
-    element: <Chat />
+    element: <Chat />,
   },
   {
     path: "/org",
-    element: <OrgDashboard />
+    element: <OrgDashboard />,
   },
   {
     path: "/orgUser",
-    element: <OrgUser />
-  }
+    element: <OrgUser />,
+  },
 ]);
 
 const App = () => {
@@ -82,7 +90,7 @@ const App = () => {
       <AlertPrompt />
       <Loading />
     </div>
-  )
-}
+  );
+};
 
 export default App;

@@ -19,6 +19,9 @@ import AlertPrompt from "./components/AlertPrompt"
 import Loading from "./components/Loading";
 import TaskCard from "./components/TaskCard";
 import Chat from "./components/Chat";
+import { useEffect } from "react";
+
+const backend = import.meta.env.VITE_SERVER ;
 
 const router = createBrowserRouter([
   {
@@ -76,6 +79,18 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const coldStart =async () => {
+    await fetch(backend,{
+      method:'GET',
+      headers:{
+        'Content-Type':'application/json'
+      }
+    })
+  }
+  useEffect(() => {
+    coldStart();
+  }, [])
+  
   return (
     <div className="h-full w-full">
       <RouterProvider router={router} />

@@ -80,7 +80,7 @@ const router = createBrowserRouter([
 
 const App = () => {
   const coldStart =async () => {
-    await fetch(backend,{
+    await fetch(`${backend}/`,{
       method:'GET',
       headers:{
         'Content-Type':'application/json'

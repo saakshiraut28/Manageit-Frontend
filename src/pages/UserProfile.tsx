@@ -10,6 +10,7 @@ import { Types } from "mongoose";
 import { makeRequest } from "../utils/api";
 import { IUser } from "../types/types";
 import SmsRoundedIcon from '@mui/icons-material/SmsRounded';
+import OrgSidebar from "../components/OrgSidebar";
 
 const UserProfile = () => {
     const { userId } = useParams();
@@ -25,7 +26,6 @@ const UserProfile = () => {
             const res = await makeRequest("/user", "GET");
             if (res.data.user) {
                 setUser(res.data.user)
-                console.log("User updated!");
             }
             else navigate("/")
         }
@@ -42,7 +42,6 @@ const UserProfile = () => {
                 if (res.data.user) {
                     setUserDetail(res.data.user);
                     setSameUser(res.data.user._id === user._id);
-                    console.log(res.data.user);
                 }
             } catch (error) {
                 setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
@@ -53,7 +52,7 @@ const UserProfile = () => {
 
     return (
         <div className="flex flex-row">
-            <SideBar />
+            {user.role === "owner" ? <OrgSidebar /> : <SideBar />}
             {/* TaskPage */}
             <div className="w-full px-4 mb-10 lg:mb-2 sm:px-6 lg:w-3/4">
                 {/* Header */}
@@ -67,7 +66,7 @@ const UserProfile = () => {
                         <div className="mt-3">
                             <h1 className="text-4xl font-bold mb-2"> {userDetail.name} <span className="block sm:inline"><Chip color="secondary" label={"Role: " + userDetail.role} className="m-2 w-fit" /></span>
                             </h1>
-                            {!sameUser && <Link to={`/chat/${userDetail.name.split(' ').join('')}/${userId}`} className="flex items-center gap-2">Talk it out on DM!!<SmsRoundedIcon /></Link>}
+                            {!sameUser && <Link to={`/chat/${userDetail.name.split(' ').join('')}/${userId}`} className="flex items-center gap-2 p-2 border w-fit border-blue-500">Talk it out on DM!!<SmsRoundedIcon /></Link>}
                         </div>
                         <Divider />
                         <Link to={"mailto:" + userDetail.email}>Email: {userDetail.email}</Link>

@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { getUserData } from "../services/user"
-import DashTask from '../components/DashTask';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AlarmOnIcon from '@mui/icons-material/AlarmOn';
 import SideBar from '../components/SideBar';
@@ -10,25 +8,38 @@ import { userAtom } from '../atom/user';
 import { makeRequest } from '../utils/api';
 import { Skeleton } from '@mui/material';
 import UserProject from '../components/UserProject';
+import { alertAtom } from '../atom/global';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [task, setTask] = useState(false);
   const [user, setUser] = useRecoilState(userAtom);
+  const [alertState, setalertState] = useRecoilState(alertAtom);
 
   // To fetch user details for the dashboard
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (user && user?.role === "owner") {
+      navigate("/org");
+    }
 
     const fetchUser = async () => {
-      const resp = await makeRequest("/user", "GET");
-      const user = resp.data.user;
-      if (!user) {
-        localStorage.removeItem('token');
-        navigate("/auth");
-      } else {
-        setUser(user);
-        console.log("Details: ", user);
+      try {
+        const resp = await makeRequest("/user", "GET");
+        const user = resp.data.user;
+        if (!user) {
+          localStorage.removeItem('token');
+          navigate("/auth");
+        } else {
+          setUser(user);
+        }
+      } catch (error) {
+        setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "warning" })
+
+        const resp = await makeRequest("/org", "GET");
+        if (resp.data.org) {
+          navigate("/org");
+        }
       }
     }
 

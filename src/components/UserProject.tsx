@@ -11,7 +11,7 @@ const UserProject = ({ project }) => {
 
     useEffect(() => {
         const fetchTask = async () => {
-            const res = await makeRequest(`/project/${project.projectId}/task?status=pending&assignTo=${user._id}`)
+            const res = await makeRequest(`/project/${project.projectId}/task?status=Pending&assignTo=${user._id}`)
             setTasks(res.data.tasks);
         }
         fetchTask();

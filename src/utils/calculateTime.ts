@@ -1,4 +1,7 @@
 export const calculateTime = (timestamp: Date) => {
+    if (timestamp === undefined) {
+        return "";
+    }
     const currentTime = new Date();
     const commentTime = new Date(timestamp);
     const difference = (currentTime.getTime() - commentTime.getTime()) / 60000; // Difference in minutes

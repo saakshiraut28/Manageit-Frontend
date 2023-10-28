@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const backend = import.meta.env.VITE_SERVER ;
+
 export const makeRequest = async (endpoint: string, method = 'GET', data = null) => {
 
     const token = localStorage.getItem("token");
@@ -9,7 +11,7 @@ export const makeRequest = async (endpoint: string, method = 'GET', data = null)
     try {
         const config = {
             method: method,
-            url: "http://localhost:8000" + endpoint,
+            url: backend + endpoint,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: token,

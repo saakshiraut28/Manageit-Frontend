@@ -6,6 +6,8 @@ import { useRecoilState } from 'recoil';
 import { alertAtom, loadingAtom } from "../atom/global";
 import { loginParams, signupParams } from "../types/types";
 
+const backend = import.meta.env.VITE_SERVER ;
+
 const Auth = () => {
   const [newUser, setNewUser] = useState(true);
   const [name, setName] = useState("");
@@ -56,7 +58,7 @@ const Auth = () => {
       }
     }
     try {
-      const response = await axios.post("http://localhost:8000" + endpoint, input)
+      const response = await axios.post(backend + endpoint, input)
       const data = response.data;
       const token = data.token;
 

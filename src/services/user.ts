@@ -1,7 +1,7 @@
 import { redirect } from "react-router-dom";
 
 // dev url
-const url = "http://localhost:8000"
+const url = import.meta.env.VITE_SERVER ;
 // prod url
 
 export const getUserData = async (endpoint: string) => {

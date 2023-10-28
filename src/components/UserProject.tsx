@@ -7,12 +7,13 @@ import DashTask from './DashTask'
 
 const UserProject = ({ project }) => {
     const [user, setUser] = useRecoilState(userAtom);
-    const [tasks, setTasks] = useState<taskType[]>();
+    const [tasks, setTasks] = useState<taskType[]>([]);
 
     useEffect(() => {
         const fetchTask = async () => {
             const res = await makeRequest(`/project/${project.projectId}/task?status=pending&assignTo=${user._id}`)
-            setTasks(res.data.tasks);
+            console.log("res\n",res.data.tasks.tasks)
+            setTasks(res.data.tasks.tasks);
         }
         fetchTask();
     }, [])

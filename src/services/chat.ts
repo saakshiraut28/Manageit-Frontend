@@ -1,6 +1,6 @@
 import { sendChatIp } from "../types/types" 
 
-const backend = "http://localhost:8000"
+const backend = import.meta.env.VITE_SERVER ;
 
 export const sendChatToDb = async ({senderId, receiverId, senderName , receiverName, message}:sendChatIp) => {
     try {

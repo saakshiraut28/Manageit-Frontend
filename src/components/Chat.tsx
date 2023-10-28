@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
-import { Button, Divider, Input } from "@mui/material"
+import { Divider } from "@mui/material"
 import SideBar from "./SideBar"
 import SmsRoundedIcon from '@mui/icons-material/SmsRounded';
 import SendIcon from "@mui/icons-material/Send";
@@ -11,7 +11,7 @@ import { io } from 'socket.io-client'
 import { useParams } from 'react-router-dom';
 import { getChatById, sendChatToDb } from "../services/chat";
 
-const backend = 'http://localhost:8000' ;
+const backend = import.meta.env.VITE_SERVER ;
 
 const myChatDiv = "justify-start"
 const senderChatDiv = "justify-end"

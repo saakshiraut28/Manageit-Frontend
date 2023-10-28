@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import { alertAtom, loadingAtom } from "../atom/global";
 import { loginParams, signupParams } from "../types/types";
-
-const backend = import.meta.env.VITE_SERVER ;
+import { messaging } from "../firebase.js";
+import { getToken } from "firebase/messaging";
 
 const Auth = () => {
   const [newUser, setNewUser] = useState(true);
@@ -16,6 +16,7 @@ const Auth = () => {
   const [loginAs, setLoginAs] = useState("");
   const [alertState, setalertState] = useRecoilState(alertAtom);
   const navigate = useNavigate();
+  const [fcmToken, setFcmToken] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -39,6 +40,15 @@ const Auth = () => {
       handleAuth("orgLogin", "/org/login");
     }
   }
+  const requestPermission = async () => {
+    const permission = await Notification.requestPermission()
+    if (permission === "granted") {
+      const token = await getToken(messaging, { vapidKey: import.meta.env.VITE_VAPID })
+      setFcmToken(token);
+    } else if (permission === "denied") {
+      alert("Please allow notifications to get updated for tasks and updates!");
+    }
+  }
 
   // Function to handle signup, login for both org and user
   const handleAuth = async (type: string, endpoint: string) => {
@@ -58,8 +68,9 @@ const Auth = () => {
       }
     }
     try {
-      const response = await axios.post(backend + endpoint, input)
+      const response = await axios.post("http://localhost:8000" + endpoint, { ...input, fcmToken: fcmToken })
       const data = response.data;
+      console.log("data : ", data);
       const token = data.token;
 
       if (token) {
@@ -79,6 +90,10 @@ const Auth = () => {
       setalertState({ open: true, text: error.response.data.msg, eventType: "error" });
     }
   }
+
+  useEffect(() => {
+    requestPermission();
+  }, [])
 
   return (
     <div className="flex flex-row h-screen">

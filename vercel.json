@@ -1,5 +1,15 @@
 {
-    "rewrites":  [
-      {"source": "/(.*)", "destination": "/"}
-    ]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    },
+    {
+      "source": "./firebase-messaging-sw.js",
+      "destination": "./firebase-messaging-sw.js",
+      "headers": {
+        "content-type": "application/javascript"
+      }
+    }
+  ]
 }

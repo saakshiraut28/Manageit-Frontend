@@ -7,7 +7,7 @@ import { alertAtom, loadingAtom } from "../atom/global";
 import { loginParams, signupParams } from "../types/types";
 import { messaging } from "../firebase.js";
 import { getToken } from "firebase/messaging";
-
+const path = "../../firebase-messaging-sw.js";
 const backend = import.meta.env.VITE_SERVER;
 
 const Auth = () => {
@@ -42,14 +42,37 @@ const Auth = () => {
       handleAuth("orgLogin", "/org/login");
     }
   }
+
   const requestPermission = async () => {
     const permission = await Notification.requestPermission()
     if (permission === "granted") {
-      const token = await getToken(messaging, { vapidKey: import.meta.env.VITE_VAPID })
+      const token = await getToken(messaging, { vapidKey: import.meta.env.VITE_VAPID });
       setFcmToken(token);
     } else if (permission === "denied") {
       alert("Please allow notifications to get updated for tasks and updates!");
     }
+  }
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register(path)
+      .then(function (registration) {
+        console.log('Registration successful, scope is:', registration.scope);
+        getToken(messaging, {
+          vapidKey: import.meta.env.VITE_VAPID
+        })
+          .then((currentToken) => {
+            if (currentToken) {
+              // Set the token
+              setFcmToken(currentToken);
+            } else {
+              // No token available
+              requestPermission();
+            }
+          }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+          });
+      }).catch(function (err) {
+        console.log('Service worker registration failed, error:', err);
+      });
   }
 
   // Function to handle signup, login for both org and user
@@ -70,9 +93,8 @@ const Auth = () => {
       }
     }
     try {
-      const response = await axios.post("" + backend + endpoint, { ...input, fcmToken: fcmToken })
+      const response = await axios.post(backend + endpoint, { ...input, fcmToken: fcmToken })
       const data = response.data;
-      console.log("data : ", data);
       const token = data.token;
 
       if (token) {
@@ -93,10 +115,6 @@ const Auth = () => {
     }
   }
 
-  useEffect(() => {
-    requestPermission();
-  }, [])
-
   return (
     <div className="flex flex-row h-screen">
       {/* Left Image */}
@@ -106,7 +124,7 @@ const Auth = () => {
 
       {/* Right Form */}
       <div className="h-full w-full flex flex-col items-center justify-center">
-        <h1 className="text-2xl my-2">Welcome to PushNote</h1>
+        <h1 className="text-2xl my-2">Welcome to PushNote !!</h1>
 
         {/* In case user is new, signup will appear, otherwise login */}
         {newUser ?

@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getMessaging } from "firebase/messaging";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAOVegDbbtIl4fJNpfBxoS0pe12HFjg65s",
-    authDomain: "pushnote-53bfc.firebaseapp.com",
-    projectId: "pushnote-53bfc",
-    storageBucket: "pushnote-53bfc.appspot.com",
-    messagingSenderId: "304989467810",
-    appId: "1:304989467810:web:94ac18764d23e5463dd3fb",
-    measurementId: "G-SNQ8B4SP2R"
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID,
+    measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

@@ -24,6 +24,10 @@ const TaskPage = () => {
     const navigate = useNavigate();
 
     const sendComment = async () => {
+        if (!user) {
+            setalertState({ open: true, text: "Unable to send comment!", eventType: "error" })
+            return;
+        }
         const commentBody = {
             userId: user._id,
             userName: user.name,
@@ -43,7 +47,7 @@ const TaskPage = () => {
         if (assignees.length < 1) {
             return "No assignee";
         }
-        const combinedNames = assignees.map(user => "@" + user.name).join(', ');
+        const combinedNames = assignees.map(user => user ? "@" + user.name : '').join(', ');
         return combinedNames;
     }
 

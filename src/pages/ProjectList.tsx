@@ -14,11 +14,19 @@ const ProjectList = () => {
     // To fetch new update for user if user doesn't exist
     useEffect(() => {
         const getUserDetails = async () => {
-            const res = await makeRequest("/user", "GET");
-            if (res.data.user) {
-                setUser(res.data.user)
+            try {
+                const res = await makeRequest("/user", "GET");
+                if (res.data.user) {
+                    setUser(res.data.user)
+                }
+            } catch (error) {
+                const res = await makeRequest("/org", "GET");
+                if (res.data.org) {
+                    setUser(res.data.org)
+                } else {
+                    navigate("/")
+                }
             }
-            else navigate("/")
         }
         if (user.role === '') {
             getUserDetails();

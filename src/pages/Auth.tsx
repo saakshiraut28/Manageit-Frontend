@@ -8,6 +8,8 @@ import { loginParams, signupParams } from "../types/types";
 import { messaging } from "../firebase.js";
 import { getToken } from "firebase/messaging";
 
+const backend = import.meta.env.VITE_SERVER;
+
 const Auth = () => {
   const [newUser, setNewUser] = useState(true);
   const [name, setName] = useState("");
@@ -68,7 +70,7 @@ const Auth = () => {
       }
     }
     try {
-      const response = await axios.post("http://localhost:8000" + endpoint, { ...input, fcmToken: fcmToken })
+      const response = await axios.post("" + backend + endpoint, { ...input, fcmToken: fcmToken })
       const data = response.data;
       console.log("data : ", data);
       const token = data.token;

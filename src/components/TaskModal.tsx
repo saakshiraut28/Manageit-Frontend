@@ -19,7 +19,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "60%",
+  width: "80%",
   bgcolor: "background.paper",
   border: "3px solid",
   borderImageSlice: 1,
@@ -128,7 +128,7 @@ export default function TaskModal() {
       >
 
         <Box sx={style}>
-          <form className="w-full pb-20 px-16 ">
+          <form className="w-full m:pb-20 m:px-16 ">
             <div className="w-full font-bold text-2xl my-12">
               So, who you gonna trouble today?
             </div>{" "}

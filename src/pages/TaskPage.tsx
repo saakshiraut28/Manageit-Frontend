@@ -85,7 +85,7 @@ const TaskPage = () => {
             <div className="w-full px-4 mb-10 lg:mb-2 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 justify-between items-center">
-                    <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
+                    <Link to={task?.projectId ? "/project/" + task.projectId : "/"} className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to Project dashboard</span></Link>
                     {user.role !== "user" && <EditTaskModal task={task} />}
                 </div>
                 {/* Task Details */}
@@ -95,7 +95,7 @@ const TaskPage = () => {
                             <h1 className="text-4xl font-bold mb-2"> {task.name} <span className="block sm:inline">
                                 <Chip variant="outlined" size="small" color="primary" label={"Assigned By: @" + task.assignedBy.name} className="m-2" />
                                 <Chip size="small" color={task.deadline ? "error" : "warning"} variant="outlined" label={task.deadline ? "Deadline: " + formatDate(task.deadline) : "No Deadline"} className="m-2" />
-                                <TaskStatus taskStatus={task.status || "No Status"} userRole={user.role} />
+                                <TaskStatus taskStatus={task.status || "No Status"} userRole={user.role} projectId={task.projectId} />
                             </span>
                             </h1>
                             <Stack>

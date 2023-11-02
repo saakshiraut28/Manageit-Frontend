@@ -53,6 +53,7 @@ const Auth = () => {
       alert("Please allow notifications to get updated for tasks and updates!");
     }
   }
+  
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(path)
       .then(function (registration) {

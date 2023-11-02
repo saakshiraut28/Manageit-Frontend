@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Modal, Button, Tooltip } from "@mui/material";
 import { IProject } from "../types/types";
@@ -32,8 +32,8 @@ export default function EditProjectModal({ project }: EditProjectModalProps) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [title, setTitle] = useState(project?.name);
-    const [desc, setDesc] = useState(project?.desc);
+    const [title, setTitle] = useState("");
+    const [desc, setDesc] = useState("");
     const [alertState, setalertState] = useRecoilState(alertAtom);
     const { projectId } = useParams();
 
@@ -53,6 +53,13 @@ export default function EditProjectModal({ project }: EditProjectModalProps) {
             setalertState({ open: true, text: "Some Error occured. Try again!", eventType: "error" });
         }
     }
+
+    useEffect(() => {
+        if (project) {
+            setTitle(project.name);
+            setDesc(project.desc);
+        }
+    }, [project]);
 
     return (
         <>

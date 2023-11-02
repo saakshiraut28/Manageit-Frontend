@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { alertAtom } from "../atom/global";
 import { useParams } from "react-router-dom";
 
-export default function TaskStatus({ taskStatus, userRole }) {
+export default function TaskStatus({ taskStatus, userRole, projectId }) {
     const [open, setOpen] = useState(false);
     const [status, setStatus] = useState<string>("");
     const { taskId } = useParams();
@@ -28,7 +28,7 @@ export default function TaskStatus({ taskStatus, userRole }) {
     const updateStatus = async () => {
         if (status && taskId) {
             try {
-                const res = await makeRequest("/task/" + taskId + "/status", "PUT", { status: status })
+                const res = await makeRequest("/task/" + taskId + "/status", "PUT", { status: status, projectId: projectId })
                 if (res.data) {
                     setalertState({ open: true, text: "Task status updated Successfully!", eventType: "success" });
                     window.location.reload();

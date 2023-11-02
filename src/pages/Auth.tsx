@@ -7,7 +7,7 @@ import { alertAtom, loadingAtom } from "../atom/global";
 import { loginParams, signupParams } from "../types/types";
 import { messaging } from "../firebase.js";
 import { getToken } from "firebase/messaging";
-const path = "../../public/firebase-messaging-sw.js";
+const path = "../../firebase-messaging-sw.js";
 const backend = import.meta.env.VITE_SERVER;
 
 const Auth = () => {

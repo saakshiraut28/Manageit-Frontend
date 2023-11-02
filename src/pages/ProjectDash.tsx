@@ -61,7 +61,7 @@ const ProjectDash = () => {
             }
             else navigate("/")
         }
-        if (user.role === '') {
+        if (user.role === "") {
             getUserDetails();
         }
     }, [])

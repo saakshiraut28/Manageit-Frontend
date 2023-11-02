@@ -26,7 +26,7 @@ const OrgUser = () => {
                 console.log(res.data.org)
             }
         }
-        if (user.role === '') {
+        if (user.role === "") {
             getUserDetails();
         }
     }, [])

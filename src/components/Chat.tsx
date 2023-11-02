@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom"
 import { Divider } from "@mui/material"
 import SideBar from "./SideBar"
@@ -25,6 +25,7 @@ const Chat = () => {
     const [socket, setsocket] = useState(null);
     const [Chats, setChats] = useState([]);
     const { name: recieverName, userId: recieverId } = useParams();
+    const chatDiv = useRef(null) ;
 
     useEffect(() => {
         const getUserDetails = async () => {
@@ -38,7 +39,8 @@ const Chat = () => {
                     const chatMessageArr = chatMessages.chats.messages;
                     const formatMessage = chatMessageArr.map(elem => ({
                         message: elem.message,
-                        senderId: elem.userId
+                        senderId: elem.userId,
+                        timestamp: elem.timestamp
                     }))
                     // console.log("chatMessage\n",formatMessage) ;
                     setChats(formatMessage);
@@ -74,7 +76,8 @@ const Chat = () => {
             //     user_msg: [...prevData.user_msg, {_id:'', user: senderId, msg: msg} ]
             //   }))
             // }
-            setChats(prev => ([...prev, { message: msg, senderId: senderId }]));
+            setChats(prev => ([...prev, { message: msg, senderId: senderId, timestamp: new Date() }]));
+            // chatDiv.current.scrollTop = chatDiv.current.scrollHeight;
         })
         setsocket(skt);
 
@@ -96,6 +99,7 @@ const Chat = () => {
             setChats(prev => ([...prev, { message: msg, senderId: user._id }]));
             console.log("Chats: ", Chats);
             sendChatToDb({ senderId: user._id, receiverId: recieverId, senderName: user.name, receiverName: recieverName, message: msg });
+            // chatDiv.current.scrollTop = chatDiv.current.scrollHeight;
         }
     }
 
@@ -117,11 +121,15 @@ const Chat = () => {
                         {/* Receiver Name */}
                         <h1 className="text-xl bg-gray-300 p-3 pl-5 mb-4">{recieverName}</h1>
                         {/* Chat Messages */}
-                        <div className="flex gap-4 flex-col mb-10 h-[50vh] overflow-y-scroll lg:h-[60vh] lg:mb-2">
+                        <div ref={chatDiv} className="flex gap-4 flex-col mb-10 h-[50vh] overflow-y-scroll lg:h-[60vh] lg:mb-2">
                             {Chats.map((elem, ind) => (
                                 <div key={ind} className={`w-full flex flex-row ${elem.senderId === user._id ? myChatDiv : senderChatDiv}`}>
-                                    <p className={`mx-2 p-3 text-white ${elem.senderId === user._id ? myChatP : senderChatP}`}>{elem.message}</p>
-                                    <span>{calculateTime(elem?.timestamp) || ""}</span>
+                                    {elem.senderId === user._id && 
+                                    <span className="text-sm flex justify-center items-end text-gray-500">{calculateTime(elem?.timestamp) || ""}</span>}
+                                    
+                                    <p className={`mx-2 p-3 text-white overflow-hidden break-words ${elem.senderId === user._id ? myChatP : senderChatP}`}>{elem.message}</p>
+                                    {elem.senderId !== user._id && 
+                                    <span className="text-sm flex justify-center items-end text-gray-500">{calculateTime(elem?.timestamp) || ""}</span>}
                                 </div>
                             ))}
                         </div>

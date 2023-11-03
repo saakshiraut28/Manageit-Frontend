@@ -33,7 +33,7 @@ const Calendar = () => {
             try {
                 const allTasks = [];
                 for (const project of user?.projects) {
-                    const res = await makeRequest(`/project/${project.projectId}/task?status=Pending&assignTo=${user._id}`);
+                    const res = await makeRequest(`/project/${project.projectId}/task?status=pending&assignTo=${user._id}`);
                     allTasks.push(...res.data.tasks);
                 }
                 setTasks(allTasks);

@@ -53,7 +53,6 @@ const Chat = () => {
     useEffect(() => {
         if (user.role === '') return;
         const ID = user._id;
-        console.log("ID =>", ID);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         const skt = io(backend);
@@ -94,10 +93,8 @@ const Chat = () => {
         const msg = e.target.msg.value;
         if (msg) {
             e.target.msg.value = '';
-            console.log(recieverId, msg, user._id);
             socket.emit('new-chat', ({ recID: recieverId, sender: user._id, msg: msg }));
             setChats(prev => ([...prev, { message: msg, senderId: user._id }]));
-            console.log("Chats: ", Chats);
             sendChatToDb({ senderId: user._id, receiverId: recieverId, senderName: user.name, receiverName: recieverName, message: msg });
             // chatDiv.current.scrollTop = chatDiv.current.scrollHeight;
         }

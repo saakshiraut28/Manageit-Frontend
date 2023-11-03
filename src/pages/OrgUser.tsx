@@ -23,7 +23,6 @@ const OrgUser = () => {
             const res = await makeRequest("/org", "GET");
             if (res.data.org) {
                 setUser(res.data.org)
-                console.log(res.data.org)
             }
         }
         if (user.role === "") {

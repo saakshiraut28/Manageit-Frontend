@@ -56,7 +56,6 @@ const OrgDashboard = () => {
                 navigate("/auth");
             } else {
                 setUser(user);
-                console.log(user);
             }
         }
 

@@ -48,7 +48,6 @@ const Auth = () => {
     if (permission === "granted") {
       const token = await getToken(messaging, { vapidKey: import.meta.env.VITE_VAPID });
       setFcmToken(token);
-      console.log("Token: ", token);
     } else if (permission === "denied") {
       alert("Please allow notifications to get updated for tasks and updates!");
     }
@@ -65,7 +64,6 @@ const Auth = () => {
             if (currentToken) {
               // Set the token
               setFcmToken(currentToken);
-              console.log("Token: ", currentToken);
             } else {
               // No token available
               requestPermission();

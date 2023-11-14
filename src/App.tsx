@@ -8,7 +8,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useEffect } from "react";
 
 // Pages
-import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ProjectDash from "./pages/ProjectDash";
@@ -32,10 +31,6 @@ const backend = import.meta.env.VITE_SERVER;
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/dashboard",
     element: <Dashboard />,
   },
   {
@@ -106,6 +101,8 @@ const App = () => {
   return (
     <div className="h-full w-full">
       <RouterProvider router={router} />
+      <AlertPrompt />
+      <Loading />
     </div>
   );
 };

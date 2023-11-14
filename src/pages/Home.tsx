@@ -4,15 +4,9 @@ import React from "react";
 import {
   Animator,
   Fade,
-  FadeIn,
-  Move,
   MoveIn,
-  MoveOut,
   ScrollContainer,
   ScrollPage,
-  Sticky,
-  StickyIn,
-  ZoomIn,
   batch,
 } from "react-scroll-motion";
 import { Divider } from "@mui/material";

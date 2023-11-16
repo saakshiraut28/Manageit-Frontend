@@ -10,6 +10,7 @@ export default {
       fontFamily: {
         josefin: ["Josefin Sans", "sans-serif"],
         title: ["Tourney", "sans-serif"],
+        brush: ["Comforter Brush", "cursive"],
       },
     },
   },

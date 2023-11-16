@@ -1,45 +1,46 @@
+/** @format */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Width and Height of scrollbar */
 ::-webkit-scrollbar {
-    width: 5px;
-    /* height: 8px; */
+  width: 5px;
+  /* height: 8px; */
 }
 
 /* Track style */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 /* Handle style */
 ::-webkit-scrollbar-thumb {
-    background: #bbb5b5;
+  background: #bbb5b5;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #979595;
+  background: #979595;
 }
 
 /* Hide scrollbar buttons */
 ::-webkit-scrollbar-button {
-    display: none;
+  display: none;
 }
 
-
 .accordion {
-    padding: 1rem !important;
+  padding: 1rem !important;
 }
 
 .task-btn {
-    position: absolute !important;
-    right: 0px !important;
+  position: absolute !important;
+  right: 0px !important;
 }

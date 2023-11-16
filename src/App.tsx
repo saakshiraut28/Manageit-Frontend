@@ -9,6 +9,7 @@ import { useEffect } from "react";
 
 // Pages
 import Auth from "./pages/Auth";
+import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import ProjectDash from "./pages/ProjectDash";
 import TaskPage from "./pages/TaskPage";
@@ -31,6 +32,10 @@ const backend = import.meta.env.VITE_SERVER;
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/dashboard",
     element: <Dashboard />,
   },
   {

@@ -23,9 +23,11 @@
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
     "firebase": "^10.5.2",
+    "gsap": "^3.12.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
+    "react-scroll-motion": "^0.3.2",
     "react-spinners": "^0.13.8",
     "recoil": "^0.7.7",
     "socket.io-client": "^4.7.2"

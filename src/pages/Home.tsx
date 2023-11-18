@@ -15,7 +15,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import { gsap } from "gsap";
 
 const Home = () => {
-  {/*useEffect(() => {
+  useEffect(() => {
     const t1 = gsap.timeline();
     t1.from(".para", {
       y: 320,
@@ -26,7 +26,7 @@ const Home = () => {
         amount: 0.8,
       },
     });
-  });*/}
+  });
   return (
     <React.Fragment>
       <ScrollContainer>

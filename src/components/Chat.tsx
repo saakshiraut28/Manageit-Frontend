@@ -107,7 +107,7 @@ const Chat = () => {
             <div className="w-full px-4 mb-10 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 items-center">
-                    <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
+                    <Link to="/messages" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to Messages</span></Link>
                 </div>
 
                 <div className="pb-4">

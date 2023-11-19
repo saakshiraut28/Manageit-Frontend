@@ -57,7 +57,7 @@ const UserProfile = () => {
             <div className="w-full px-4 mb-10 lg:mb-2 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 justify-between items-center">
-                    <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
+                    <Link to="/dashboard" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
                     {sameUser && <button className="text-md flex items-center"><EditIcon /> Edit</button>}
                 </div>
                 {/* User Details */}

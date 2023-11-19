@@ -13,6 +13,7 @@ import { Divider } from "@mui/material";
 import TwitterIcon from '@mui/icons-material/Twitter';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { gsap } from "gsap";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   useEffect(() => {
@@ -33,13 +34,13 @@ const Home = () => {
         <ScrollPage>
           <Animator animation={batch(Fade())}>
             <nav className="h-[70px] flex px-4 lg:px-10 text-xl justify-center items-center border-b">
-              <div className="flex w-1/2 justify-start items-center font-title"><a href="/">Pushnote</a></div>
-              <div className="flex w-1/2 justify-end items-center underline font-josefin"><a href="/dashboard">Explore</a></div>
+              <div className="flex w-1/2 justify-start items-center font-title"><Link to="/">Pushnote</Link></div>
+              <div className="flex w-1/2 justify-end items-center underline font-josefin"><Link to="/dashboard">Explore</Link></div>
             </nav>
             <section className="Main m-0 p-0 w-full h-screen flex justify-center items-center bg-[url('./images/background.png')] bg-center bg-cover font-josefin">
               <div className="para text-center space-y-4 px-4">
                 <p className="title text-6xl lg:text-8xl font-bold text-black font-title">
-                  <a href="/auth"> Pushnote </a>
+                  <Link to="/auth"> Pushnote </Link>
                   <br />
                   <span className="text-4xl lg:text-6xl">Manage like a Pro!</span>
                 </p>
@@ -71,16 +72,16 @@ const Home = () => {
               <div className="grid md:grid-cols-3 text-start">
                 <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
                   <div className="flex justify-center relative bg-[#FFD964] h-[65px] ">
-                  <p className="absolute text-4xl md:text-6xl text-center py-4">📋</p>
+                    <p className="absolute text-4xl md:text-6xl text-center py-4">📋</p>
                   </div>
-                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8 px-4 pt-8">
+                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
                     Task Management
                   </p>
                   <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Leverage the power of PushNote to seamlessly generate and assign tasks to your team, all while  monitoring and tracking the progress of each assignment. </p>
                 </div>
                 <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
                   <div className="flex justify-center relative bg-[#73C2FB] h-[65px] ">
-                  <p className="absolute text-4xl md:text-6xl text-center py-4">🗓️</p>
+                    <p className="absolute text-4xl md:text-6xl text-center py-4">🗓️</p>
                   </div>
                   <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
                     Track Deadlines
@@ -88,32 +89,32 @@ const Home = () => {
                   <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Now, there's no need for an extra application to save and manage your deadlines—everything you need is seamlessly incorporated into our platform.</p>
                 </div>
                 <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
-<div className="flex justify-center relative bg-[#9362FA] h-[65px] ">
-                  <p className="absolute text-4xl md:text-6xl text-center py-4">🧙‍♀️</p>
+                  <div className="flex justify-center relative bg-[#9362FA] h-[65px] ">
+                    <p className="absolute text-4xl md:text-6xl text-center py-4">🧙‍♀️</p>
                   </div>                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
                     Project Management
                   </p>
                   <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Empower your productivity without limits – with PushNote, you can effortlessly create and manage an unlimited number of projects and teams.</p>
                 </div>
                 <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
-<div className="flex justify-center relative bg-[#95FF99] h-[65px] ">
-                  <p className="absolute text-4xl md:text-6xl text-center py-4">👩‍💻</p>
+                  <div className="flex justify-center relative bg-[#95FF99] h-[65px] ">
+                    <p className="absolute text-4xl md:text-6xl text-center py-4">👩‍💻</p>
                   </div>                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
                     Invite within seconds.
                   </p>
                   <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Experience seamless onboarding with PushNote's user-friendly interface. Invite team members effortlessly with a single invitation.</p>
                 </div>
                 <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
-<div className="flex justify-center relative bg-[#FF8282] h-[65px] ">
-                  <p className="absolute text-4xl md:text-6xl text-center py-4">📢</p>
+                  <div className="flex justify-center relative bg-[#FF8282] h-[65px] ">
+                    <p className="absolute text-4xl md:text-6xl text-center py-4">📢</p>
                   </div>                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
                     Notifications
                   </p>
                   <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Team members receive instant notifications each time they are assigned a task, ensuring no detail is overlooked and keeping everyone engaged and informed.</p>
                 </div>
                 <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
-<div className="flex justify-center relative bg-[#FFD79A] h-[65px] ">
-                  <p className="absolute text-4xl md:text-6xl text-center py-4">🙋</p>
+                  <div className="flex justify-center relative bg-[#FFD79A] h-[65px] ">
+                    <p className="absolute text-4xl md:text-6xl text-center py-4">🙋</p>
                   </div>                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
                     Chat with friends.
                   </p>
@@ -133,7 +134,7 @@ const Home = () => {
                   <p className="title text-2xl lg:text-4xl font-bold text-black text-center space-y-4 my-5">
                     About
                   </p>
-                  <p className="text-md lg:text-lg font-regular text-center text-justify">
+                  <p className="text-md lg:text-lg font-regular text-center">
                     At Pushnote, We crafted a robust platform designed to cater
                     to every facet of organizational dynamics. We incorporated a
                     bunch of features, curated to empower teams in handling
@@ -152,7 +153,7 @@ const Home = () => {
               </Animator>
               <Animator animation={batch(Fade(), MoveIn(1000, 0))}>
                 <div className="px-10 hidden lg:block w-[500px]">
-                  <img src="https://res.cloudinary.com/dtdsi5sev/image/upload/v1699723438/people-who-support-svgrepo-com_rt96gj.png" />
+                  <img src="https://res.cloudinary.com/dtdsi5sev/image/upload/v1699723438/people-who-support-svgrepo-com_rt96gj.png" alt="" />
                 </div>
               </Animator>
             </section>
@@ -164,9 +165,9 @@ const Home = () => {
             <p>
               {" "}
               So, why don't you{" "}
-              <a className="underline" href="/dashboard">
+              <Link className="underline" to="/dashboard">
                 try it
-              </a>{" "}
+              </Link> {" "}
               out today.
             </p>
             <p> We're sure you'll love it!!</p>
@@ -180,27 +181,27 @@ const Home = () => {
           </p>
           <div className="grid md:grid-cols-3 text-start">
             <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-              <div className="grid justify-items-center"><img className="rounded-full w-[100px] h-[100px]" src="https://res.cloudinary.com/dtdsi5sev/image/upload/v1700327557/Screenshot_2023-11-18_224117_aimlqm.png"/></div>
+              <div className="grid justify-items-center"><img className="rounded-full w-[100px] h-[100px]" src="https://res.cloudinary.com/dtdsi5sev/image/upload/v1700327557/Screenshot_2023-11-18_224117_aimlqm.png" alt="mayank" /></div>
               <p className="text-md lg:text-lg font-medium text-center">
                 Mayank Bansal
               </p>
-              <p className="text-center space-x-2"><a href="https://twitter.com/SimplerMayank"><TwitterIcon/></a><a href="https://github.com/MayankBansal12"><GitHubIcon/></a></p>
+              <p className="text-center space-x-2"><Link to="https://twitter.com/SimplerMayank"><TwitterIcon /></Link> <Link to="https://github.com/MayankBansal12"><GitHubIcon /></Link> </p>
               <p className="text-center px-4 py-2">Full-Stack  Developer ⁍⁌ DSA in Java ⁍⁌ Looking for web dev projects to contribute ^-^*</p>
             </div>
             <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-              <div className="grid justify-items-center"><img className="rounded-full w-[100px] h-[100px]" src="https://avatars.githubusercontent.com/u/84245432?v=4"/></div>
+              <div className="grid justify-items-center"><img className="rounded-full w-[100px] h-[100px]" src="https://avatars.githubusercontent.com/u/84245432?v=4" alt="arghya" /></div>
               <p className="text-md lg:text-lg font-medium text-center">
                 Arghya Das
               </p>
-              <p className="text-center space-x-2"><a href="https://twitter.com/ArghyaDas04"><TwitterIcon/></a><a href="https://github.com/Arghyahub"><GitHubIcon/></a></p>
+              <p className="text-center space-x-2"><Link to="https://twitter.com/ArghyaDas04"><TwitterIcon /></Link> <Link to="https://github.com/Arghyahub"><GitHubIcon /></Link> </p>
               <p className="text-center px-4 py-2">SDE Intern | Fullstack | MERN | Dev | ML | CSE2025</p>
             </div>
             <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-              <div className="grid justify-items-center"><img className="rounded-full w-[100px] h-[100px]" src="https://res.cloudinary.com/dtdsi5sev/image/upload/c_crop,ar_1:1/v1700128564/IMG_20230619_091330-removebg-preview_wbtza6.jpg"/></div>
+              <div className="grid justify-items-center"><img className="rounded-full w-[100px] h-[100px]" src="https://res.cloudinary.com/dtdsi5sev/image/upload/c_crop,ar_1:1/v1700128564/IMG_20230619_091330-removebg-preview_wbtza6.jpg" alt="saakshi" /></div>
               <p className="text-md lg:text-lg font-medium text-center">
                 Saakshi Raut
               </p>
-              <p className="text-center space-x-2"><a href="https://twitter.com/saakshitwt"><TwitterIcon/></a><a href="https://github.com/saakshiraut28"><GitHubIcon/></a></p>
+              <p className="text-center space-x-2"><Link to="https://twitter.com/saakshitwt"><TwitterIcon /></Link> <Link to="https://github.com/saakshiraut28"><GitHubIcon /></Link> </p>
               <p className="text-center px-4 py-2">Google DSC CORE'23 | Loves to Code 👩‍💻| Web Designer/Developer 🕸️| Open-source Contributor 🚀 | Tech Blogger.</p>
             </div>
           </div>
@@ -208,7 +209,7 @@ const Home = () => {
 
         <Divider />
         <footer className="flex justify-center items-center py-5">
-          
+
         </footer>
       </ScrollContainer>
     </React.Fragment>

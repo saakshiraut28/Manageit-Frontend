@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import { alertAtom, loadingAtom } from "../atom/global";
 import { loginParams, signupParams } from "../types/types";
@@ -23,7 +23,7 @@ const Auth = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [])
 
@@ -52,7 +52,7 @@ const Auth = () => {
       alert("Please allow notifications to get updated for tasks and updates!");
     }
   }
-  
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(path)
       .then(function (registration) {
@@ -102,7 +102,7 @@ const Auth = () => {
         localStorage.setItem("token", token);
         // If user, navigate to user dashboard
         if (loginAs === "user") {
-          navigate("/");
+          navigate("/dashboard");
         } else if (loginAs === "org") {
           // If org, navigate to user dashboard
           navigate("/org");
@@ -125,7 +125,7 @@ const Auth = () => {
 
       {/* Right Form */}
       <div className="h-full w-full flex flex-col items-center justify-center">
-        <h1 className="text-2xl my-2">Welcome to PushNote !!</h1>
+        <h1 className="text-2xl">Welcome to PushNote !!</h1>
 
         {/* In case user is new, signup will appear, otherwise login */}
         {newUser ?
@@ -206,6 +206,8 @@ const Auth = () => {
             </form>
             <p>New to PushNote? <button onClick={() => setNewUser(true)} className="text-blue-700">Sign up</button></p>
           </>}
+
+        <Link to="/" className="text-blue-500 my-2 border-b-2">Back to HomePage</Link>
       </div>
     </div >
   )

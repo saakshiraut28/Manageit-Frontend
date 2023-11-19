@@ -12,9 +12,7 @@ import { userType } from "../types/types"
 import OrgSidebar from "../components/OrgSidebar";
 
 const Messages = () => {
-    const navigate = useNavigate();
-    // (Used Just for demonstration)
-    // Fetch messages from user array and show that instead of this
+    const navigate = useNavigate();    
     const [members, setMembers] = useState<userType[]>();
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const [alertState, setalertState] = useRecoilState(alertAtom);
@@ -69,7 +67,7 @@ const Messages = () => {
             <div className="w-full px-4 mb-10 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 items-center">
-                    <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
+                    <Link to="/dashboard" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
                 </div>
 
                 <div className="container">

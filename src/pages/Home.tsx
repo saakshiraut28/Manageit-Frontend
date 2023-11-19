@@ -40,8 +40,10 @@ const Home = () => {
               <div className="para text-center space-y-4 px-4">
                 <p className="title text-6xl lg:text-8xl font-bold text-black font-title">
                   <a href="/auth"> Pushnote </a>
+                  <br />
+                  <span className="text-4xl lg:text-6xl">Manage like a Pro!</span>
                 </p>
-                <p className="text text-xl lg:text-3xl font-medium text-black px-10">
+                <p className="text text-xl lg:text-3xl font-medium text-[black] px-10">
                   {" "}
                   Managing your team can sometimes get difficult.
                 </p>
@@ -62,48 +64,60 @@ const Home = () => {
                   {" "}
                   Why Pushnote??{" "}
                 </p>
-                <p className="text text-md lg:text-xl font-medium text-blacks px-10s">
+                <p className="text text-md lg:text-xl font-medium text-blacks ">
                   {" "}
-                  Duties of managers ain't easy at all.{" "}
-                </p>
+                  Boost your teams Productivity... 🚀{" "}                </p>
               </div>
               <div className="grid md:grid-cols-3 text-start">
-                <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-                  <p className="text-4xl md:text-6xl text-center py-4">📋</p>
-                  <p className="text-md lg:text-lg font-medium text-center">
-                    Manage task assigned to you with ease.
+                <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
+                  <div className="flex justify-center relative bg-[#FFD964] h-[65px] ">
+                  <p className="absolute text-4xl md:text-6xl text-center py-4">📋</p>
+                  </div>
+                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8 px-4 pt-8">
+                    Task Management
                   </p>
+                  <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Leverage the power of PushNote to seamlessly generate and assign tasks to your team, all while  monitoring and tracking the progress of each assignment. </p>
                 </div>
-                <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-                  <p className="text-4xl md:text-6xl text-center py-4">🎯</p>
-                  <p className="text-md lg:text-lg font-medium text-center">
-                    Keep track of your deadlines.
+                <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
+                  <div className="flex justify-center relative bg-[#73C2FB] h-[65px] ">
+                  <p className="absolute text-4xl md:text-6xl text-center py-4">🗓️</p>
+                  </div>
+                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
+                    Track Deadlines
                   </p>
+                  <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Now, there's no need for an extra application to save and manage your deadlines—everything you need is seamlessly incorporated into our platform.</p>
                 </div>
-                <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-                  <p className="text-4xl md:text-6xl text-center py-4">🧙‍♀️</p>
-                  <p className="text-md lg:text-lg font-medium text-center">
-                    Seamlessly jump across different project.
+                <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
+<div className="flex justify-center relative bg-[#9362FA] h-[65px] ">
+                  <p className="absolute text-4xl md:text-6xl text-center py-4">🧙‍♀️</p>
+                  </div>                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
+                    Project Management
                   </p>
+                  <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Empower your productivity without limits – with PushNote, you can effortlessly create and manage an unlimited number of projects and teams.</p>
                 </div>
-                <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-                  <p className="text-4xl md:text-6xl text-center py-4">📈</p>
-                  <p className="text-md lg:text-lg font-medium text-center">
-                    Easily manage your team members.
+                <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
+<div className="flex justify-center relative bg-[#95FF99] h-[65px] ">
+                  <p className="absolute text-4xl md:text-6xl text-center py-4">👩‍💻</p>
+                  </div>                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
+                    Invite within seconds.
                   </p>
+                  <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Experience seamless onboarding with PushNote's user-friendly interface. Invite team members effortlessly with a single invitation.</p>
                 </div>
-                <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-                  <p className="text-4xl md:text-6xl text-center py-4">📣</p>
-                  <p className="text-md lg:text-lg font-medium text-center">
-                    Get notified on task assignments. So that you won't miss out
-                    anything.
+                <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
+<div className="flex justify-center relative bg-[#FF8282] h-[65px] ">
+                  <p className="absolute text-4xl md:text-6xl text-center py-4">📢</p>
+                  </div>                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
+                    Notifications
                   </p>
+                  <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Team members receive instant notifications each time they are assigned a task, ensuring no detail is overlooked and keeping everyone engaged and informed.</p>
                 </div>
-                <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-                  <p className="text-4xl md:text-6xl text-center py-4">🙋</p>
-                  <p className="text-md lg:text-lg font-medium text-center">
-                    Chat with your friends.
+                <div className="grid max-w-sm border shadow-lg rounded-sm mx-2 my-2">
+<div className="flex justify-center relative bg-[#FFD79A] h-[65px] ">
+                  <p className="absolute text-4xl md:text-6xl text-center py-4">🙋</p>
+                  </div>                  <p className="text-lg lg:text-xl font-medium text-center px-4 pt-8">
+                    Chat with friends.
                   </p>
+                  <p className="text-md lg:text-md py-4 font-regular px-4 text-justify">Connect with your team members, discuss project details, and make decisions on the fly, all within the convenience of our platform. Elevate communication and teamwork.</p>
                 </div>
               </div>
             </section>
@@ -166,7 +180,7 @@ const Home = () => {
           </p>
           <div className="grid md:grid-cols-3 text-start">
             <div className="grid max-w-sm border shadow-lg rounded-sm px-4 py-4 mx-2 my-2">
-              <div className="grid justify-items-center"><img className="rounded-full w-[100px] h-[100px]" src="https://twitter.com/SimplerMayank/photo"/></div>
+              <div className="grid justify-items-center"><img className="rounded-full w-[100px] h-[100px]" src="https://res.cloudinary.com/dtdsi5sev/image/upload/v1700327557/Screenshot_2023-11-18_224117_aimlqm.png"/></div>
               <p className="text-md lg:text-lg font-medium text-center">
                 Mayank Bansal
               </p>

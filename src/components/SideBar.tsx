@@ -71,7 +71,7 @@ const SideBar = () => {
                     <Divider />
 
                     <Tooltip title="Home">
-                        <Link to="/">
+                        <Link to="/dashboard">
                             <ListItem className="my-3">
                                 <div className="flex "><HomeIcon color="action" /><span className="pl-4 font-bold"> Home</span></div>
                             </ListItem>

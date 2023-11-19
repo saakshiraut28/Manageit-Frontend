@@ -106,7 +106,7 @@ const ProjectDash = () => {
             <div className="w-full px-4 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 items-center justify-between">
-                    <Link to="/" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
+                    <Link to="/dashboard" className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to dashboard</span></Link>
                     {/* Members Popover */}
                     <div className="flex flex-wrap">
                         <div className="relative">

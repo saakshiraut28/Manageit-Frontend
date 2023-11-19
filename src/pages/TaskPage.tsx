@@ -85,7 +85,7 @@ const TaskPage = () => {
             <div className="w-full px-4 mb-10 lg:mb-2 sm:px-6 lg:w-3/4">
                 {/* Header */}
                 <div className="flex h-14 justify-between items-center">
-                    <Link to={task?.projectId ? "/project/" + task.projectId : "/"} className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to Project dashboard</span></Link>
+                    <Link to={task?.projectId ? "/project/" + task.projectId : "/dashboard"} className="flex items-center gap-2"><i className="fa-solid fa-circle-arrow-left"></i> <span className="text-xs font-semibold underline">Jump to Project dashboard</span></Link>
                     {user.role !== "user" && <EditTaskModal task={task} />}
                 </div>
                 {/* Task Details */}
